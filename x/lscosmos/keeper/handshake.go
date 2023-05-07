@@ -17,7 +17,7 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 // OnChanOpenInit implements the IBCModule interface

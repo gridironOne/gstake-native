@@ -10,9 +10,9 @@ import (
 	ibctesting "github.com/cosmos/ibc-go/v6/testing"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/gridironOne/gstake-native/v2/app"
-	"github.com/gridironOne/gstake-native/v2/app/helpers"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/app"
+	"github.com/gridironOne/gstake-native/app/helpers"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 var (
@@ -39,7 +39,7 @@ var (
 	BaseDenom        = "uatom"
 	MintDenom        = "stk/uatom"
 	MinDeposit       = sdk.NewInt(5)
-	GstakeFeeAddress = "gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
+	GstakeFeeAddress = "did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
 )
 
 func init() {

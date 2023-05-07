@@ -1,15 +1,15 @@
 package keeper_test
 
 import (
-	"github.com/gridironOne/gridiron-sdk/v2/x/oracle/testutil"
-	"github.com/gridironOne/gstake-native/v2/app/helpers"
+	"github.com/persistenceOne/persistence-sdk/v2/x/oracle/testutil"
+	"github.com/gridironOne/gstake-native/app/helpers"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 // tests LiquidStake, LiquidUnstake
@@ -204,7 +204,7 @@ func (s *KeeperTestSuite) TestLiquidStakeFromVestingAccount() {
 	vestingEndTime := s.ctx.BlockTime().Add(2 * time.Hour)
 	vestingMidTime := s.ctx.BlockTime().Add(90 * time.Minute)
 
-	vestingAccAddr := "gridiron19sswr2uc7f64904nqfzdwxzthn6pqxj2u0k5lh"
+	vestingAccAddr := "did:fury:g19sswr2uc7f64904nqfzdwxzthn6pqxj2u0k5lh"
 	vestingAcc, err := sdk.AccAddressFromBech32(vestingAccAddr)
 	s.Require().NoError(err)
 

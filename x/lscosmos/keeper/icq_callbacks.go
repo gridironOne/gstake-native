@@ -5,9 +5,9 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/gogo/protobuf/proto"
-	icqtypes "github.com/gridironOne/gridiron-sdk/v2/x/interchainquery/types"
+	icqtypes "github.com/persistenceOne/persistence-sdk/v2/x/interchainquery/types"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 const (

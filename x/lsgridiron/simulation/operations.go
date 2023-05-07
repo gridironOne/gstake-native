@@ -10,9 +10,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	appparams "github.com/gridironOne/gstake-native/v2/app/params"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	appparams "github.com/gridironOne/gstake-native/app/params"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 // Simulation operation weights constants.

@@ -9,8 +9,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	lscosmossimulation "github.com/gridironOne/gstake-native/v2/x/lscosmos/simulation"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	lscosmossimulation "github.com/gridironOne/gstake-native/x/lscosmos/simulation"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 // avoid unused import issue

@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/tendermint/tendermint/crypto"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 func TestMsgLiquidStake(t *testing.T) {

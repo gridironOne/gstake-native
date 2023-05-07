@@ -7,8 +7,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/keeper"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 func NewHandler(k keeper.Keeper) sdk.Handler {

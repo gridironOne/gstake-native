@@ -5,8 +5,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 // NewHandler returns a new msg handler.

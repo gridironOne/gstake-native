@@ -6,7 +6,7 @@ import "gstake/liquidstakeibc/v1beta1/params.proto";
 
 // this line is used by starport scaffolding # genesis/proto/import
 
-option go_package = "github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/types";
+option go_package = "github.com/gridironOne/gstake-native/x/liquidstakeibc/types";
 
 // GenesisState defines the liquidstakeibc module's genesis state.
 message GenesisState {

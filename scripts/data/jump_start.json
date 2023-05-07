@@ -19,7 +19,7 @@
     "gstake_restake_fee": "0.05",
     "gstake_unstake_fee": "0.00",
     "gstake_redemption_fee": "0.1",
-    "gstake_fee_address": "gridiron108cqtjz7gqasctvrw74kewg6642062kmfuujsd"
+    "gstake_fee_address": "did:fury:g108cqtjz7gqasctvrw74kewg6642062kmfuujsd"
   },
   "host_accounts": {
     "delegator_account_owner_i_d": "lscosmos_gstake_delegation_account",

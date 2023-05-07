@@ -16,8 +16,8 @@ import (
 	tmrand "github.com/tendermint/tendermint/libs/rand"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	gstakeapp "github.com/gridironOne/gstake-native/v2/app"
-	gstakehelpers "github.com/gridironOne/gstake-native/v2/app/helpers"
+	gstakeapp "github.com/gridironOne/gstake-native/app"
+	gstakehelpers "github.com/gridironOne/gstake-native/app/helpers"
 )
 
 type IntegrationTestSuite struct {

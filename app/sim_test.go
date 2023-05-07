@@ -6,9 +6,9 @@ import (
 	"os"
 	"testing"
 
-	gstake "github.com/gridironOne/gstake-native/v2/app"
+	gstake "github.com/gridironOne/gstake-native/app"
 
-	"github.com/gridironOne/gstake-native/v2/app/helpers"
+	"github.com/gridironOne/gstake-native/app/helpers"
 	"github.com/stretchr/testify/require"
 	"github.com/tendermint/tendermint/libs/log"
 	"github.com/tendermint/tendermint/libs/rand"

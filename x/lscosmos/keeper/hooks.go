@@ -11,11 +11,11 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v6/modules/core/04-channel/types"
 	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
 	"github.com/gogo/protobuf/proto"
-	"github.com/gridironOne/gridiron-sdk/v2/utils"
-	epochstypes "github.com/gridironOne/gridiron-sdk/v2/x/epochs/types"
-	ibchookertypes "github.com/gridironOne/gridiron-sdk/v2/x/ibchooker/types"
+	"github.com/persistenceOne/persistence-sdk/v2/utils"
+	epochstypes "github.com/persistenceOne/persistence-sdk/v2/x/epochs/types"
+	ibchookertypes "github.com/persistenceOne/persistence-sdk/v2/x/ibchooker/types"
 
-	lscosmostypes "github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	lscosmostypes "github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 // BeforeEpochStart - call hook if registered

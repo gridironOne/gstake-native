@@ -9,7 +9,7 @@ import (
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 // Keeper of the liquidstaking store

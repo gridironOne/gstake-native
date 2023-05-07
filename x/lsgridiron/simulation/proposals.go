@@ -8,9 +8,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/gridironOne/gstake-native/v2/app/params"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/app/params"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 // Simulation operation weights constants.

@@ -22,11 +22,11 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	chain "github.com/gridironOne/gstake-native/v2/app"
-	testhelpers "github.com/gridironOne/gstake-native/v2/app/helpers"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	chain "github.com/gridironOne/gstake-native/app"
+	testhelpers "github.com/gridironOne/gstake-native/app/helpers"
+	"github.com/gridironOne/gstake-native/x/lsgridiron"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 var (

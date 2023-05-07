@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
-	"github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/types"
+	"github.com/gridironOne/gstake-native/x/liquidstakeibc/types"
 )
 
 type Keeper struct {

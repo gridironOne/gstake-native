@@ -7,9 +7,9 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/gridironOne/gstake-native/v2/app"
-	"github.com/gridironOne/gstake-native/v2/app/helpers"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos"
+	"github.com/gridironOne/gstake-native/app"
+	"github.com/gridironOne/gstake-native/app/helpers"
+	"github.com/gridironOne/gstake-native/x/lscosmos"
 )
 
 type HandlerTestSuite struct {

@@ -48,7 +48,7 @@ Example proposal :
 {
   "title": "change gstake fee address",
   "description": "this proposal changes gstake fee address in the chain",
-  "gstake_fee_address": "gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+  "gstake_fee_address": "did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
   "deposit": "10000000stake"
 }
 ```

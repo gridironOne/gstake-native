@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 func TestNewMinDepositAndFeeChangeJSON(t *testing.T) {
@@ -33,12 +33,12 @@ func TestNewGstakeFeeAddressChangeProposalJSON(t *testing.T) {
 	propJSON := NewGstakeFeeAddressChangeProposalJSON(
 		"title",
 		"description",
-		"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+		"did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 		"1000stake")
 
 	require.Equal(t, "title", propJSON.Title)
 	require.Equal(t, "description", propJSON.Description)
-	require.Equal(t, "gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9", propJSON.GstakeFeeAddress)
+	require.Equal(t, "did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9", propJSON.GstakeFeeAddress)
 	require.Equal(t, "1000stake", propJSON.Deposit)
 }
 

@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/simulation"
 )
 
 func TestParamChanges(t *testing.T) {

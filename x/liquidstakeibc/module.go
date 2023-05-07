@@ -18,10 +18,10 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/client"
-	"github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/simulation"
-	"github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/types"
+	"github.com/gridironOne/gstake-native/x/liquidstakeibc/client"
+	"github.com/gridironOne/gstake-native/x/liquidstakeibc/keeper"
+	"github.com/gridironOne/gstake-native/x/liquidstakeibc/simulation"
+	"github.com/gridironOne/gstake-native/x/liquidstakeibc/types"
 )
 
 var (

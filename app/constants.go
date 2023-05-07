@@ -13,13 +13,13 @@ import (
 )
 
 const (
-	Bech32MainPrefix = "gridiron"
+	Bech32MainPrefix = "did:fury:g"
 	CoinType         = 118
 	Purpose          = 44
 
-	HumanCoinUnit = "xprt"
-	BaseCoinUnit  = "uxprt"
-	XPRTExponent  = 6
+	HumanCoinUnit = "fury"
+	BaseCoinUnit  = "ufury"
+	FURYExponent  = 6
 
 	Bech32PrefixAccAddr  = Bech32MainPrefix
 	Bech32PrefixAccPub   = Bech32MainPrefix + sdkTypes.PrefixPublic
@@ -39,7 +39,7 @@ func RegisterDenoms() {
 	if err != nil {
 		panic(err)
 	}
-	err = sdkTypes.RegisterDenom(BaseCoinUnit, sdkTypes.NewDecWithPrec(1, XPRTExponent))
+	err = sdkTypes.RegisterDenom(BaseCoinUnit, sdkTypes.NewDecWithPrec(1, FURYExponent))
 	if err != nil {
 		panic(err)
 	}

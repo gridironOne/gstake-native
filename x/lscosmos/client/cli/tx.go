@@ -13,8 +13,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	"github.com/spf13/cobra"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/client/utils"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/client/utils"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 // GetTxCmd returns the transaction commands for this module
@@ -178,7 +178,7 @@ Example Proposal :
 {
 	"title": "change gstake fee address",
 	"description": "this proposal changes gstake fee address in the chain",
-	"gstake_fee_address" : "gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
+	"gstake_fee_address" : "did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
 	"deposit": "100stake"
 }
 

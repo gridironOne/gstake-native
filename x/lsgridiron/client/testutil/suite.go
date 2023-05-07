@@ -22,11 +22,11 @@ import (
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	tmdb "github.com/tendermint/tm-db"
 
-	chain "github.com/gridironOne/gstake-native/v2/app"
-	testhelpers "github.com/gridironOne/gstake-native/v2/app/helpers"
-	"github.com/gridironOne/gstake-native/v2/app/params"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/client/cli"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	chain "github.com/gridironOne/gstake-native/app"
+	testhelpers "github.com/gridironOne/gstake-native/app/helpers"
+	"github.com/gridironOne/gstake-native/app/params"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/client/cli"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 type IntegrationTestSuite struct {

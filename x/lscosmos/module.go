@@ -16,9 +16,9 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/client/cli"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/client/cli"
+	"github.com/gridironOne/gstake-native/x/lscosmos/keeper"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 var (

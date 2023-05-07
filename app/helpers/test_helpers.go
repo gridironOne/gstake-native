@@ -36,8 +36,8 @@ import (
 	tmtypes "github.com/tendermint/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/gridironOne/gstake-native/v2/app"
-	appparams "github.com/gridironOne/gstake-native/v2/app/params"
+	"github.com/gridironOne/gstake-native/app"
+	appparams "github.com/gridironOne/gstake-native/app/params"
 )
 
 // SimAppChainID hardcoded chainID for simulation

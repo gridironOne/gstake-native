@@ -9,8 +9,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/cosmos/cosmos-sdk/types/kv"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 func TestDecodeLiquidStakingStore(t *testing.T) {

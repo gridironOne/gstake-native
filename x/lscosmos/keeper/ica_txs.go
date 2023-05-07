@@ -11,7 +11,7 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v6/modules/core/04-channel/types"
 	"github.com/gogo/protobuf/proto"
 
-	lscosmostypes "github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	lscosmostypes "github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 // GenerateAndExecuteICATx does ica transactions with messages,

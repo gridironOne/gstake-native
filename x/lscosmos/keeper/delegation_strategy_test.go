@@ -11,8 +11,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/bech32"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/keeper"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 var HostStakingDenom = "uatom"

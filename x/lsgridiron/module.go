@@ -18,10 +18,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/client/cli"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/client/cli"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 var (

@@ -19,5 +19,5 @@ done
 cd ..
 
 # move proto files to the right places
-cp -r github.com/gridironOne/gstake-native/v2/* ./
+cp -r github.com/gridironOne/gstake-native/* ./
 rm -rf github.com

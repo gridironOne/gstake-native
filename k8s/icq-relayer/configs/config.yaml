@@ -8,7 +8,7 @@ chains:
     account-prefix: gridiron
     keyring-backend: test
     gas-adjustment: 10
-    gas-prices: 0.001uxprt
+    gas-prices: 0.001ufury
     key-directory: /icq/keys
     debug: false
     timeout: 20s

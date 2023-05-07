@@ -29,8 +29,8 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	dbm "github.com/tendermint/tm-db"
 
-	gstakeApp "github.com/gridironOne/gstake-native/v2/app"
-	"github.com/gridironOne/gstake-native/v2/app/params"
+	gstakeApp "github.com/gridironOne/gstake-native/app"
+	"github.com/gridironOne/gstake-native/app/params"
 )
 
 // NewRootCmd creates a new root command for simd. It is called once in the
@@ -92,7 +92,7 @@ func initAppConfig() (string, interface{}) {
 	srvCfg := serverconfig.DefaultConfig()
 	srvCfg.StateSync.SnapshotInterval = 1000
 	srvCfg.StateSync.SnapshotKeepRecent = 10
-	srvCfg.MinGasPrices = "0uxprt"
+	srvCfg.MinGasPrices = "0ufury"
 	return params.CustomConfigTemplate, params.CustomAppConfig{
 		Config: *srvCfg,
 		BypassMinFeeMsgTypes: []string{

@@ -24,7 +24,7 @@ import (
 	"github.com/tendermint/tendermint/p2p"
 	"github.com/tendermint/tendermint/privval"
 
-	gstake "github.com/gridironOne/gstake-native/v2/app"
+	gstake "github.com/gridironOne/gstake-native/app"
 )
 
 type validator struct {

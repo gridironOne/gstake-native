@@ -11,8 +11,8 @@ import (
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	"github.com/stretchr/testify/require"
 
-	"github.com/gridironOne/gstake-native/v2/app"
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/app"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 func init() {
@@ -184,17 +184,17 @@ func TestNewGstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewGstakeFeeAddressChangeProposal(
 				"title",
 				"description",
-				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError:  nil,
-			expectedString: "GstakeFeeAddressChange:\nTitle:                 title\nDescription:           description\nGstakeFeeAddress: \t   gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9\n\n",
+			expectedString: "GstakeFeeAddressChange:\nTitle:                 title\nDescription:           description\nGstakeFeeAddress: \t   did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9\n\n",
 		},
 		{
 			testName: "invalid title length",
 			proposal: *types.NewGstakeFeeAddressChangeProposal(
 				"",
 				"description",
-				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrap(govtypes.ErrInvalidProposalContent, "proposal title cannot be blank"),
 		},
@@ -203,7 +203,7 @@ func TestNewGstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewGstakeFeeAddressChangeProposal(
 				strings.Repeat("-", govv1beta1.MaxTitleLength+1),
 				"description",
-				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrapf(govtypes.ErrInvalidProposalContent, "proposal title is longer than max length of %d", govv1beta1.MaxTitleLength),
 		},
@@ -212,7 +212,7 @@ func TestNewGstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewGstakeFeeAddressChangeProposal(
 				"title",
 				"",
-				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrap(govtypes.ErrInvalidProposalContent, "proposal description cannot be blank"),
 		},
@@ -221,7 +221,7 @@ func TestNewGstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewGstakeFeeAddressChangeProposal(
 				"title",
 				strings.Repeat("-", govv1beta1.MaxDescriptionLength+1),
-				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"did:fury:g1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrapf(govtypes.ErrInvalidProposalContent, "proposal description is longer than max length of %d", govv1beta1.MaxDescriptionLength),
 		},

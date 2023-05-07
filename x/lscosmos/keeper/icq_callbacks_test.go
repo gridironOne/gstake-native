@@ -6,9 +6,9 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	channeltypes "github.com/cosmos/ibc-go/v6/modules/core/04-channel/types"
 	"github.com/gogo/protobuf/proto"
-	icqtypes "github.com/gridironOne/gridiron-sdk/v2/x/interchainquery/types"
+	icqtypes "github.com/persistenceOne/persistence-sdk/v2/x/interchainquery/types"
 
-	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/x/lscosmos/types"
 )
 
 func (suite *IntegrationTestSuite) TestHandleRewardsAccountCallbacks() {

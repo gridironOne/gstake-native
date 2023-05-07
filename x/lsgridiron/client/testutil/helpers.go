@@ -11,7 +11,7 @@ import (
 	govcli "github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 	paramscli "github.com/cosmos/cosmos-sdk/x/params/client/cli"
 
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/client/cli"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/client/cli"
 )
 
 var commonArgs = []string{

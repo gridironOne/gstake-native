@@ -12,8 +12,8 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	tmrand "github.com/tendermint/tendermint/libs/rand"
 
-	gstakeApp "github.com/gridironOne/gstake-native/v2/app"
-	"github.com/gridironOne/gstake-native/v2/app/params"
+	gstakeApp "github.com/gridironOne/gstake-native/app"
+	"github.com/gridironOne/gstake-native/app/params"
 )
 
 const (

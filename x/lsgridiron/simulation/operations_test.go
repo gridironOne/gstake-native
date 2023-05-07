@@ -3,7 +3,7 @@ package simulation_test
 import (
 	"github.com/cosmos/cosmos-sdk/x/bank/testutil"
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
-	testhelpers "github.com/gridironOne/gstake-native/v2/app/helpers"
+	testhelpers "github.com/gridironOne/gstake-native/app/helpers"
 	"math/rand"
 	"testing"
 	"time"
@@ -16,10 +16,10 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	chain "github.com/gridironOne/gstake-native/v2/app"
-	"github.com/gridironOne/gstake-native/v2/app/params"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	chain "github.com/gridironOne/gstake-native/app"
+	"github.com/gridironOne/gstake-native/app/params"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 // TestWeightedOperations tests the weights of the operations.

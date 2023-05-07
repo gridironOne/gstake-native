@@ -10,9 +10,9 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/gridironOne/gstake-native/v2/app/params"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
-	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
+	"github.com/gridironOne/gstake-native/app/params"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/x/lsgridiron/types"
 )
 
 func TestProposalContents(t *testing.T) {

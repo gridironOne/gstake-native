@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	sdkTypes "github.com/cosmos/cosmos-sdk/types"
-	"github.com/gridironOne/gstake-native/v2/app"
-	"github.com/gridironOne/gstake-native/v2/cmd/gstaked/cmd"
+	"github.com/gridironOne/gstake-native/app"
+	"github.com/gridironOne/gstake-native/cmd/gstaked/cmd"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-{
+	{
   "chain_name": "gstake",
   "coingecko": "gridiron",
   "api": "https://rest.devnet.gridiron.gstake.finance:443",
@@ -10,8 +10,8 @@
   "addr_prefix": "gridiron",
   "logo": "",
   "assets": [{
-    "base": "uxprt",
-    "symbol": "XPRT",
+    "base": "ufury",
+    "symbol": "FURY",
     "exponent": "6",
     "coingecko_id": "gridiron",
     "logo": ""
