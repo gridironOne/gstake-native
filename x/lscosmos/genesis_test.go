@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/persistenceOne/pstake-native/v2/app/helpers"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/app/helpers"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 func TestGenesis(t *testing.T) {
@@ -16,8 +16,8 @@ func TestGenesis(t *testing.T) {
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
-	_, pStakeApp, ctx := helpers.CreateTestApp(t)
-	k := pStakeApp.LSCosmosKeeper
+	_, gStakeApp, ctx := helpers.CreateTestApp(t)
+	k := gStakeApp.LSCosmosKeeper
 	lscosmos.InitGenesis(ctx, k, genesisState)
 	got := lscosmos.ExportGenesis(ctx, k)
 	require.NotNil(t, got)

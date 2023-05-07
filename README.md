@@ -1,3 +1,3 @@
-# PSTAKE-NATIVE
+# GSTAKE-NATIVE
 
 Fork of cosmos/gaia, adds lscosmos module

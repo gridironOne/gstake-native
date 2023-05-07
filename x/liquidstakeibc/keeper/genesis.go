@@ -2,7 +2,7 @@ package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/persistenceOne/pstake-native/v2/x/liquidstakeibc/types"
+	"github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/types"
 )
 
 // InitGenesis initializes the liquidstakeibc module's state from a given genesis state.

@@ -6,8 +6,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/keeper"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/keeper"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 // NewLSCosmosProposalHandler creates a new governance Handler for lscosmos module
@@ -16,8 +16,8 @@ func NewLSCosmosProposalHandler(k keeper.Keeper) govtypes.Handler {
 		switch c := content.(type) {
 		case *types.MinDepositAndFeeChangeProposal:
 			return keeper.HandleMinDepositAndFeeChangeProposal(ctx, k, *c)
-		case *types.PstakeFeeAddressChangeProposal:
-			return keeper.HandlePstakeFeeAddressChangeProposal(ctx, k, *c)
+		case *types.GstakeFeeAddressChangeProposal:
+			return keeper.HandleGstakeFeeAddressChangeProposal(ctx, k, *c)
 		case *types.AllowListedValidatorSetChangeProposal:
 			return keeper.HandleAllowListedValidatorSetChangeProposal(ctx, k, *c)
 

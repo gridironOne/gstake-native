@@ -23,9 +23,9 @@ func (suite *IntegrationTestSuite) TestHostChainParams() {
 	suite.Equal(TransferPort, params.TransferPort)
 	suite.Equal(BaseDenom, params.BaseDenom)
 	suite.Equal(MintDenom, params.MintDenom)
-	suite.Equal(PstakeFeeAddress, params.PstakeParams.PstakeFeeAddress)
+	suite.Equal(GstakeFeeAddress, params.GstakeParams.GstakeFeeAddress)
 	suite.Equal(sdk.NewInt(5), params.MinDeposit)
-	suite.Equal(depositFee, params.PstakeParams.PstakeDepositFee)
-	suite.Equal(restakeFee, params.PstakeParams.PstakeRestakeFee)
-	suite.Equal(unstakeFee, params.PstakeParams.PstakeUnstakeFee)
+	suite.Equal(depositFee, params.GstakeParams.GstakeDepositFee)
+	suite.Equal(restakeFee, params.GstakeParams.GstakeRestakeFee)
+	suite.Equal(unstakeFee, params.GstakeParams.GstakeUnstakeFee)
 }

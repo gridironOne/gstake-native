@@ -1,16 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: faucet-pstake
+  name: faucet-gstake
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   tls:
     - secretName: cloudflare-tls
       hosts:
-        - faucet.devnet.persistence.pstake.finance
+        - faucet.devnet.gridiron.gstake.finance
   rules:
-    - host: faucet.devnet.persistence.pstake.finance
+    - host: faucet.devnet.gridiron.gstake.finance
       http:
         paths:
           - path: /
@@ -32,9 +32,9 @@ spec:
   tls:
     - secretName: cloudflare-tls
       hosts:
-        - faucet.devnet.cosmos.pstake.finance
+        - faucet.devnet.cosmos.gstake.finance
   rules:
-    - host: faucet.devnet.cosmos.pstake.finance
+    - host: faucet.devnet.cosmos.gstake.finance
       http:
         paths:
           - path: /

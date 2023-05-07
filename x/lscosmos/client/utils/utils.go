@@ -5,16 +5,16 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
-// PstakeParams defines the fees and address for register host chain proposal's PstakeParams
-type PstakeParams struct {
-	PstakeDepositFee    string `json:"pstake_deposit_fee" yaml:"pstake_deposit_fee"`
-	PstakeRestakeFee    string `json:"pstake_restake_fee" yaml:"pstake_restake_fee"`
-	PstakeUnstakeFee    string `json:"pstake_unstake_fee" yaml:"pstake_unstake_fee"`
-	PstakeRedemptionFee string `json:"pstake_redemption_fee" yaml:"pstake_redemption_fee"`
-	PstakeFeeAddress    string `json:"pstake_fee_address" yaml:"pstake_fee_address"`
+// GstakeParams defines the fees and address for register host chain proposal's GstakeParams
+type GstakeParams struct {
+	GstakeDepositFee    string `json:"gstake_deposit_fee" yaml:"gstake_deposit_fee"`
+	GstakeRestakeFee    string `json:"gstake_restake_fee" yaml:"gstake_restake_fee"`
+	GstakeUnstakeFee    string `json:"gstake_unstake_fee" yaml:"gstake_unstake_fee"`
+	GstakeRedemptionFee string `json:"gstake_redemption_fee" yaml:"gstake_redemption_fee"`
+	GstakeFeeAddress    string `json:"gstake_fee_address" yaml:"gstake_fee_address"`
 }
 
 // MinDepositAndFeeChangeProposalJSON defines a MinDepositAndFeeChangeProposal JSON input to be parsed
@@ -23,24 +23,24 @@ type MinDepositAndFeeChangeProposalJSON struct {
 	Title               string `json:"title" yaml:"title"`
 	Description         string `json:"description" yaml:"description"`
 	MinDeposit          string `json:"min_deposit" yaml:"min_deposit"`
-	PstakeDepositFee    string `json:"pstake_deposit_fee" yaml:"pstake_deposit_fee"`
-	PstakeRestakeFee    string `json:"pstake_restake_fee" yaml:"pstake_restake_fee"`
-	PstakeUnstakeFee    string `json:"pstake_unstake_fee" yaml:"pstake_unstake_fee"`
-	PstakeRedemptionFee string `json:"pstake_redemption_fee" yaml:"pstake_redemption_fee"`
+	GstakeDepositFee    string `json:"gstake_deposit_fee" yaml:"gstake_deposit_fee"`
+	GstakeRestakeFee    string `json:"gstake_restake_fee" yaml:"gstake_restake_fee"`
+	GstakeUnstakeFee    string `json:"gstake_unstake_fee" yaml:"gstake_unstake_fee"`
+	GstakeRedemptionFee string `json:"gstake_redemption_fee" yaml:"gstake_redemption_fee"`
 	Deposit             string `json:"deposit" yaml:"deposit"`
 }
 
 // NewMinDepositAndFeeChangeJSON returns MinDepositAndFeeChangeProposalJSON struct with input values
-func NewMinDepositAndFeeChangeJSON(title, description, minDeposit, pstakeDepositFee, pstakeRestakeFee,
-	pstakeUnstakeFee, pstakeRedemptionFee, deposit string) MinDepositAndFeeChangeProposalJSON {
+func NewMinDepositAndFeeChangeJSON(title, description, minDeposit, gstakeDepositFee, gstakeRestakeFee,
+	gstakeUnstakeFee, gstakeRedemptionFee, deposit string) MinDepositAndFeeChangeProposalJSON {
 	return MinDepositAndFeeChangeProposalJSON{
 		Title:               title,
 		Description:         description,
 		MinDeposit:          minDeposit,
-		PstakeDepositFee:    pstakeDepositFee,
-		PstakeRestakeFee:    pstakeRestakeFee,
-		PstakeUnstakeFee:    pstakeUnstakeFee,
-		PstakeRedemptionFee: pstakeRedemptionFee,
+		GstakeDepositFee:    gstakeDepositFee,
+		GstakeRestakeFee:    gstakeRestakeFee,
+		GstakeUnstakeFee:    gstakeUnstakeFee,
+		GstakeRedemptionFee: gstakeRedemptionFee,
 		Deposit:             deposit,
 	}
 
@@ -62,30 +62,30 @@ func ParseMinDepositAndFeeChangeProposalJSON(cdc *codec.LegacyAmino, proposalFil
 	return proposal, nil
 }
 
-// PstakeFeeAddressChangeProposalJSON defines a PstakeFeeAddressChangeProposal JSON input to be parsed
+// GstakeFeeAddressChangeProposalJSON defines a GstakeFeeAddressChangeProposal JSON input to be parsed
 // from a JSON file. Deposit is used by gov module to change status of proposal.
-type PstakeFeeAddressChangeProposalJSON struct {
+type GstakeFeeAddressChangeProposalJSON struct {
 	Title            string `json:"title" yaml:"title"`
 	Description      string `json:"description" yaml:"description"`
-	PstakeFeeAddress string `json:"pstake_fee_address" yaml:"pstake_fee_address"`
+	GstakeFeeAddress string `json:"gstake_fee_address" yaml:"gstake_fee_address"`
 	Deposit          string `json:"deposit" yaml:"deposit"`
 }
 
-// NewPstakeFeeAddressChangeProposalJSON returns PstakeFeeAddressChangeProposalJSON struct with input values
-func NewPstakeFeeAddressChangeProposalJSON(title, description, pstakeFeeAddress, deposit string) PstakeFeeAddressChangeProposalJSON {
-	return PstakeFeeAddressChangeProposalJSON{
+// NewGstakeFeeAddressChangeProposalJSON returns GstakeFeeAddressChangeProposalJSON struct with input values
+func NewGstakeFeeAddressChangeProposalJSON(title, description, gstakeFeeAddress, deposit string) GstakeFeeAddressChangeProposalJSON {
+	return GstakeFeeAddressChangeProposalJSON{
 		Title:            title,
 		Description:      description,
-		PstakeFeeAddress: pstakeFeeAddress,
+		GstakeFeeAddress: gstakeFeeAddress,
 		Deposit:          deposit,
 	}
 
 }
 
-// ParsePstakeFeeAddressChangeProposalJSON reads and parses a PstakeFeeAddressChangeProposal  from
+// ParseGstakeFeeAddressChangeProposalJSON reads and parses a GstakeFeeAddressChangeProposal  from
 // file.
-func ParsePstakeFeeAddressChangeProposalJSON(cdc *codec.LegacyAmino, proposalFile string) (PstakeFeeAddressChangeProposalJSON, error) {
-	proposal := PstakeFeeAddressChangeProposalJSON{}
+func ParseGstakeFeeAddressChangeProposalJSON(cdc *codec.LegacyAmino, proposalFile string) (GstakeFeeAddressChangeProposalJSON, error) {
+	proposal := GstakeFeeAddressChangeProposalJSON{}
 
 	contents, err := os.ReadFile(proposalFile)
 	if err != nil {
@@ -145,7 +145,7 @@ type JumpstartTxnJSON struct {
 	MintDenom             string                      `json:"mint_denom" yaml:"mint_denom"`
 	MinDeposit            string                      `json:"min_deposit" yaml:"min_deposit"`
 	AllowListedValidators types.AllowListedValidators `json:"allow_listed_validators" yaml:"allow_listed_validators"`
-	PstakeParams          PstakeParams                `json:"pstake_params" yaml:"pstake_params"`
+	GstakeParams          GstakeParams                `json:"gstake_params" yaml:"gstake_params"`
 	HostAccounts          types.HostAccounts          `json:"host_accounts" yaml:"host_accounts"`
 }
 

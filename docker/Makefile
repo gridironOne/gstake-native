@@ -1,17 +1,17 @@
-PROCESS=pstake
-IMAGE_NAME=persistenceone/$(PROCESS)
+PROCESS=gstake
+IMAGE_NAME=gridironone/$(PROCESS)
 TAG_NAME=latest
 CONTAINER_NAME=container-$(PROCESS)
 FILE=Dockerfile
 
 _DOCKER_ENV=\
-	-e CHAIN_ID=pstake \
-	-e PSTAKE_DIR=/pstaked \
+	-e CHAIN_ID=gstake \
+	-e GSTAKE_DIR=/gstaked \
 	-e COINS="100000000000000000stake" \
 	$(DOCKER_ENV)
 _DOCKER_VOLUME=\
-    -v $(PWD):/pstake \
-	-v $(PWD)/k8s/pstake/configs:/configs \
+    -v $(PWD):/gstake \
+	-v $(PWD)/k8s/gstake/configs:/configs \
 	-v /tmp:/tmp \
 	$(DOCKER_VOLUME)
 _DOCKER_ARGS=\

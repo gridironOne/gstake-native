@@ -97,7 +97,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 }
 
 func (s *IntegrationTestSuite) TearDownSuite() {
-	if str := os.Getenv("PSTAKE_E2E_SKIP_CLEANUP"); len(str) > 0 {
+	if str := os.Getenv("GSTAKE_E2E_SKIP_CLEANUP"); len(str) > 0 {
 		skipCleanup, err := strconv.ParseBool(str)
 		s.Require().NoError(err)
 
@@ -273,9 +273,9 @@ func (s *IntegrationTestSuite) runValidators(c *chain, portOffset int) {
 			Name:      val.instanceName(),
 			NetworkID: s.dkrNet.Network.ID,
 			Mounts: []string{
-				fmt.Sprintf("%s/:/root/.pstaked", val.configDir()),
+				fmt.Sprintf("%s/:/root/.gstaked", val.configDir()),
 			},
-			Repository: "persistenceone/pstake-e2e",
+			Repository: "gridironone/gstake-e2e",
 		}
 
 		// expose the first validator for debugging and communication
@@ -330,12 +330,12 @@ func (s *IntegrationTestSuite) runValidators(c *chain, portOffset int) {
 func (s *IntegrationTestSuite) runIBCRelayer() {
 	s.T().Log("starting Hermes relayer container...")
 
-	tmpDir, err := ioutil.TempDir("", "pstake-e2e-testnet-hermes-")
+	tmpDir, err := ioutil.TempDir("", "gstake-e2e-testnet-hermes-")
 	s.Require().NoError(err)
 	s.tmpDirs = append(s.tmpDirs, tmpDir)
 
-	pstakeAVal := s.chainA.validators[0]
-	pstakeBVal := s.chainB.validators[0]
+	gstakeAVal := s.chainA.validators[0]
+	gstakeBVal := s.chainB.validators[0]
 	hermesCfgPath := path.Join(tmpDir, "hermes")
 
 	s.Require().NoError(os.MkdirAll(hermesCfgPath, 0755))
@@ -358,12 +358,12 @@ func (s *IntegrationTestSuite) runIBCRelayer() {
 				"3031/tcp": {{HostIP: "", HostPort: "3036"}},
 			},
 			Env: []string{
-				fmt.Sprintf("PSTAKE_A_E2E_CHAIN_ID=%s", s.chainA.id),
-				fmt.Sprintf("PSTAKE_B_E2E_CHAIN_ID=%s", s.chainB.id),
-				fmt.Sprintf("PSTAKE_A_E2E_VAL_MNEMONIC=%s", pstakeAVal.mnemonic),
-				fmt.Sprintf("PSTAKE_B_E2E_VAL_MNEMONIC=%s", pstakeBVal.mnemonic),
-				fmt.Sprintf("PSTAKE_A_E2E_VAL_HOST=%s", s.valResources[s.chainA.id][0].Container.Name[1:]),
-				fmt.Sprintf("PSTAKE_B_E2E_VAL_HOST=%s", s.valResources[s.chainB.id][0].Container.Name[1:]),
+				fmt.Sprintf("GSTAKE_A_E2E_CHAIN_ID=%s", s.chainA.id),
+				fmt.Sprintf("GSTAKE_B_E2E_CHAIN_ID=%s", s.chainB.id),
+				fmt.Sprintf("GSTAKE_A_E2E_VAL_MNEMONIC=%s", gstakeAVal.mnemonic),
+				fmt.Sprintf("GSTAKE_B_E2E_VAL_MNEMONIC=%s", gstakeBVal.mnemonic),
+				fmt.Sprintf("GSTAKE_A_E2E_VAL_HOST=%s", s.valResources[s.chainA.id][0].Container.Name[1:]),
+				fmt.Sprintf("GSTAKE_B_E2E_VAL_HOST=%s", s.valResources[s.chainB.id][0].Container.Name[1:]),
 			},
 			Entrypoint: []string{
 				"sh",

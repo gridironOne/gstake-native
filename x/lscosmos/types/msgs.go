@@ -241,9 +241,9 @@ func (m *MsgRecreateICA) GetSigners() []sdk.AccAddress {
 //
 //nolint:interfacer
 func NewMsgJumpStart(address sdk.AccAddress, chainID, connectionID, transferChannel, transferPort, baseDenom, mintDenom string,
-	minDeposit math.Int, allowListedValidators AllowListedValidators, pstakeParams PstakeParams, hostAccounts HostAccounts) *MsgJumpStart {
+	minDeposit math.Int, allowListedValidators AllowListedValidators, gstakeParams GstakeParams, hostAccounts HostAccounts) *MsgJumpStart {
 	return &MsgJumpStart{
-		PstakeAddress:         address.String(),
+		GstakeAddress:         address.String(),
 		ChainID:               chainID,
 		ConnectionID:          connectionID,
 		TransferChannel:       transferChannel,
@@ -252,7 +252,7 @@ func NewMsgJumpStart(address sdk.AccAddress, chainID, connectionID, transferChan
 		MintDenom:             mintDenom,
 		MinDeposit:            minDeposit,
 		AllowListedValidators: allowListedValidators,
-		PstakeParams:          pstakeParams,
+		GstakeParams:          gstakeParams,
 		HostAccounts:          hostAccounts,
 	}
 }
@@ -265,8 +265,8 @@ func (m *MsgJumpStart) Type() string { return MsgTypeJumpStart }
 
 // ValidateBasic performs stateless checks
 func (m *MsgJumpStart) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(m.PstakeAddress); err != nil {
-		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.PstakeAddress)
+	if _, err := sdk.AccAddressFromBech32(m.GstakeAddress); err != nil {
+		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.GstakeAddress)
 	}
 	if m.ChainID == "" ||
 		m.ConnectionID == "" ||
@@ -280,11 +280,11 @@ func (m *MsgJumpStart) ValidateBasic() error {
 	if !m.AllowListedValidators.Valid() {
 		return ErrInValidAllowListedValidators
 	}
-	if _, err := sdk.AccAddressFromBech32(m.PstakeParams.PstakeFeeAddress); err != nil {
-		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.PstakeParams.PstakeFeeAddress)
+	if _, err := sdk.AccAddressFromBech32(m.GstakeParams.GstakeFeeAddress); err != nil {
+		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.GstakeParams.GstakeFeeAddress)
 	}
-	if m.PstakeParams.PstakeFeeAddress != m.PstakeAddress {
-		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, fmt.Sprintf("pstakeAddress should be equal to PstakeParams.PstakeFeeAddress, got %s, %s", m.PstakeParams.PstakeFeeAddress, m.PstakeAddress))
+	if m.GstakeParams.GstakeFeeAddress != m.GstakeAddress {
+		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, fmt.Sprintf("gstakeAddress should be equal to GstakeParams.GstakeFeeAddress, got %s, %s", m.GstakeParams.GstakeFeeAddress, m.GstakeAddress))
 	}
 	if m.MinDeposit.LTE(sdk.ZeroInt()) {
 		return errorsmod.Wrapf(ErrInvalidDeposit, "min deposit must be positive")
@@ -302,7 +302,7 @@ func (m *MsgJumpStart) GetSignBytes() []byte {
 
 // GetSigners defines whose signature is required
 func (m *MsgJumpStart) GetSigners() []sdk.AccAddress {
-	acc, err := sdk.AccAddressFromBech32(m.PstakeAddress)
+	acc, err := sdk.AccAddressFromBech32(m.GstakeAddress)
 	if err != nil {
 		panic(err)
 	}
@@ -314,7 +314,7 @@ func (m *MsgJumpStart) GetSigners() []sdk.AccAddress {
 //nolint:interfacer
 func NewMsgChangeModuleState(address sdk.AccAddress, moduleState bool) *MsgChangeModuleState {
 	return &MsgChangeModuleState{
-		PstakeAddress: address.String(),
+		GstakeAddress: address.String(),
 		ModuleState:   moduleState,
 	}
 }
@@ -327,8 +327,8 @@ func (m *MsgChangeModuleState) Type() string { return MsgTypeChangeModuleState }
 
 // ValidateBasic performs stateless checks
 func (m *MsgChangeModuleState) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(m.PstakeAddress); err != nil {
-		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.PstakeAddress)
+	if _, err := sdk.AccAddressFromBech32(m.GstakeAddress); err != nil {
+		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.GstakeAddress)
 	}
 
 	return nil
@@ -341,7 +341,7 @@ func (m *MsgChangeModuleState) GetSignBytes() []byte {
 
 // GetSigners defines whose signature is required
 func (m *MsgChangeModuleState) GetSigners() []sdk.AccAddress {
-	acc, err := sdk.AccAddressFromBech32(m.PstakeAddress)
+	acc, err := sdk.AccAddressFromBech32(m.GstakeAddress)
 	if err != nil {
 		panic(err)
 	}
@@ -357,7 +357,7 @@ func NewMsgReportSlashing(address sdk.AccAddress, validatorAddress sdk.ValAddres
 		panic(err)
 	}
 	return &MsgReportSlashing{
-		PstakeAddress:    address.String(),
+		GstakeAddress:    address.String(),
 		ValidatorAddress: valAddr,
 	}
 }
@@ -370,8 +370,8 @@ func (m *MsgReportSlashing) Type() string { return MsgTypeReportSlashing }
 
 // ValidateBasic performs stateless checks
 func (m *MsgReportSlashing) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(m.PstakeAddress); err != nil {
-		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.PstakeAddress)
+	if _, err := sdk.AccAddressFromBech32(m.GstakeAddress); err != nil {
+		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.GstakeAddress)
 	}
 	if _, err := ValAddressFromBech32(m.ValidatorAddress, CosmosValOperPrefix); err != nil {
 		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.ValidatorAddress)
@@ -387,7 +387,7 @@ func (m *MsgReportSlashing) GetSignBytes() []byte {
 
 // GetSigners defines whose signature is required
 func (m *MsgReportSlashing) GetSigners() []sdk.AccAddress {
-	acc, err := sdk.AccAddressFromBech32(m.PstakeAddress)
+	acc, err := sdk.AccAddressFromBech32(m.GstakeAddress)
 	if err != nil {
 		panic(err)
 	}
