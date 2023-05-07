@@ -1,12 +1,12 @@
-package lspersistence
+package lsgridiron
 
 import (
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/keeper"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 // NewHandler returns a new msg handler.

@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pstake-validator
+  name: gstake-validator
   labels:
-    app.kubernetes.io/name: pstake-validator
+    app.kubernetes.io/name: gstake-validator
 spec:
   clusterIP: None
   ports:
@@ -21,20 +21,20 @@ spec:
       protocol: TCP
       targetPort: 8081
   selector:
-    app.kubernetes.io/name: pstake-validator
+    app.kubernetes.io/name: gstake-validator
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pstake-validator
+  name: gstake-validator
 spec:
-  serviceName: pstake-validator
+  serviceName: gstake-validator
   replicas: 3
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app.kubernetes.io/instance: pstake
-      app.kubernetes.io/name: pstake-validator
+      app.kubernetes.io/instance: gstake
+      app.kubernetes.io/name: gstake-validator
   template:
     metadata:
       annotations:
@@ -43,43 +43,43 @@ spec:
         sla: high
         tier: gateway
       labels:
-        app.kubernetes.io/instance: pstake
-        app.kubernetes.io/type: pstake-validator
-        app.kubernetes.io/name: pstake-validator
+        app.kubernetes.io/instance: gstake
+        app.kubernetes.io/type: gstake-validator
+        app.kubernetes.io/name: gstake-validator
         app.kubernetes.io/version: '0.1'
     spec:
       imagePullSecrets:
         - name: test-docker-creds
       initContainers:
         - name: wait-for-genesis
-          image: persistenceone/pstake
+          image: gridironone/gstake
           imagePullPolicy: Always
           env:
             - name: GENESIS_HOST
-              value: pstake-genesis.dev-native
+              value: gstake-genesis.dev-native
             - name: GENESIS_PORT
               value: "8081"
           command:
             - bash
             - "-c"
             - |
-              while [ $(curl -sw '%{http_code}' http://pstake-genesis.dev-native.svc.cluster.local:8081/node_id -o /dev/null) -ne 200 ]; do
+              while [ $(curl -sw '%{http_code}' http://gstake-genesis.dev-native.svc.cluster.local:8081/node_id -o /dev/null) -ne 200 ]; do
                 echo "Genesis validator does not seem to be ready. Waiting for it to start..."
                 sleep 10;
               done
               echo "Ready to start"
               exit 0
         - name: init-validator
-          image: persistenceone/pstake
+          image: gridironone/gstake
           imagePullPolicy: Always
           env:
             - name: CHAIN_ID
               valueFrom:
                 configMapKeyRef:
                   key: chain.id
-                  name: pstake
-            - name: PSTAKE_DIR
-              value: /pstaked
+                  name: gstake
+            - name: gSTAKE_DIR
+              value: /gstaked
           command:
             - bash
             - "-c"
@@ -87,38 +87,38 @@ spec:
               VAL_INDEX=${HOSTNAME##*-}
               echo "Validator Index: $VAL_INDEX"
 
-              rm -rf $PSTAKE_DIR
+              rm -rf $gSTAKE_DIR
 
               VAL_NAME=$(jq -r ".validators[$VAL_INDEX].name" /configs/validators.json)
               echo "Validator Index: $VAL_INDEX, Key name: $VAL_NAME"
 
               echo "Printing genesis file before init"
-              ls -lrht $PSTAKE_DIR/config
+              ls -lrht $gSTAKE_DIR/config
 
-              jq -r ".validators[$VAL_INDEX].mnemonic" /configs/validators.json | pstaked init pstake --chain-id $CHAIN_ID --home $PSTAKE_DIR --recover
-              jq -r ".validators[$VAL_INDEX].mnemonic" /configs/validators.json | pstaked keys add $VAL_NAME --recover --keyring-backend='test' --home $PSTAKE_DIR
+              jq -r ".validators[$VAL_INDEX].mnemonic" /configs/validators.json | gstaked init gstake --chain-id $CHAIN_ID --home $gSTAKE_DIR --recover
+              jq -r ".validators[$VAL_INDEX].mnemonic" /configs/validators.json | gstaked keys add $VAL_NAME --recover --keyring-backend='test' --home $gSTAKE_DIR
 
-              curl http://pstake-genesis.dev-native.svc.cluster.local:8081/genesis -o $PSTAKE_DIR/config/genesis.json
+              curl http://gstake-genesis.dev-native.svc.cluster.local:8081/genesis -o $gSTAKE_DIR/config/genesis.json
               echo "Genesis file that we got....."
-              cat $PSTAKE_DIR/config/genesis.json
+              cat $gSTAKE_DIR/config/genesis.json
 
               echo "All exports"
               export
 
               echo "Fetching genesis file"
 
-              GENESIS_NODE_P2P=$(curl -s http://pstake-genesis.dev-native.svc.cluster.local:8081/node_id)@pstake-genesis.dev-native.svc.cluster.local:26656
+              GENESIS_NODE_P2P=$(curl -s http://gstake-genesis.dev-native.svc.cluster.local:8081/node_id)@gstake-genesis.dev-native.svc.cluster.local:26656
               echo "Node P2P: $GENESIS_NODE_P2P"
-              sed -i "s/persistent_peers = \"\"/persistent_peers = \"$GENESIS_NODE_P2P\"/g" $PSTAKE_DIR/config/config.toml
-              sed -i 's#"tcp://127.0.0.1:26657"#"tcp://0.0.0.0:26657"#g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/timeout_propose = "3s"/timeout_propose = "1s"/g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/index_all_keys = false/index_all_keys = true/g' $PSTAKE_DIR/config/config.toml
+              sed -i "s/persistent_peers = \"\"/persistent_peers = \"$GENESIS_NODE_P2P\"/g" $gSTAKE_DIR/config/config.toml
+              sed -i 's#"tcp://127.0.0.1:26657"#"tcp://0.0.0.0:26657"#g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/timeout_propose = "3s"/timeout_propose = "1s"/g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/index_all_keys = false/index_all_keys = true/g' $gSTAKE_DIR/config/config.toml
 
               echo "Printing the whole config.toml file"
-              cat $PSTAKE_DIR/config/config.toml
+              cat $gSTAKE_DIR/config/config.toml
 
-              curl -s http://pstake-genesis.dev-native.svc.cluster.local:8081/pub_key
+              curl -s http://gstake-genesis.dev-native.svc.cluster.local:8081/pub_key
           resources:
             limits:
               cpu: "0.2"
@@ -127,28 +127,28 @@ spec:
               cpu: "0.1"
               memory: "200M"
           volumeMounts:
-            - mountPath: /pstaked
-              name: pstaked
+            - mountPath: /gstaked
+              name: gstaked
             - mountPath: /configs
               name: addresses
       containers:
         - name: validator
-          image: persistenceone/pstake
+          image: gridironone/gstake
           imagePullPolicy: Always
           env:
             - name: CHAIN_ID
               valueFrom:
                 configMapKeyRef:
                   key: chain.id
-                  name: pstake
-            - name: PSTAKE_DIR
-              value: /pstaked
+                  name: gstake
+            - name: gSTAKE_DIR
+              value: /gstaked
           command:
             - bash
             - "-c"
             - |
               # Starting
-              pstaked start --home $PSTAKE_DIR
+              gstaked start --home $gSTAKE_DIR
           lifecycle:
             postStart:
               exec:
@@ -162,7 +162,7 @@ spec:
 
                     # Wait for the node to be synced
                     max_tries=10
-                    while [[ $(pstaked status --home $PSTAKE_DIR 2>&1 | jq ".SyncInfo.catching_up") == true ]]
+                    while [[ $(gstaked status --home $gSTAKE_DIR 2>&1 | jq ".SyncInfo.catching_up") == true ]]
                     do
                       if [[ max_tries -lt 0 ]]; then echo "Not able to sync with genesis node"; exit 1; fi
                       echo "Still syncing... Sleeping for 15 secs. Tries left $max_tries"
@@ -172,7 +172,7 @@ spec:
 
                     # Run create validator tx command
                     echo "Running txn for create-validator"
-                    pstaked tx staking create-validator --home $PSTAKE_DIR --pubkey=$(pstaked tendermint show-validator --home $PSTAKE_DIR) --moniker $VAL_NAME --amount 5000000000uxprt --keyring-backend="test" --chain-id $CHAIN_ID --from $VAL_NAME --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1000000" --gas="auto" --gas-adjustment 1.5 --yes > /validator.log
+                    gstaked tx staking create-validator --home $gSTAKE_DIR --pubkey=$(gstaked tendermint show-validator --home $gSTAKE_DIR) --moniker $VAL_NAME --amount 5000000000uxprt --keyring-backend="test" --chain-id $CHAIN_ID --from $VAL_NAME --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1000000" --gas="auto" --gas-adjustment 1.5 --yes > /validator.log
           resources:
             limits:
               cpu: "1"
@@ -181,22 +181,22 @@ spec:
               cpu: "0.5"
               memory: "500M"
           volumeMounts:
-            - mountPath: /pstaked
-              name: pstaked
+            - mountPath: /gstaked
+              name: gstaked
             - mountPath: /configs
               name: addresses
         - name: exposer-app
-          image: persistenceone/exposer:pstake
+          image: gridironone/exposer:gstake
           imagePullPolicy: Always
           env:
             - name: HOME_DIR
-              value: /pstaked
+              value: /gstaked
             - name: GENESIS_FILE
-              value: /pstaked/config/genesis.json
+              value: /gstaked/config/genesis.json
             - name: PORT
               value: "8081"
             - name: CLIENT_NAME
-              value: "pstaked"
+              value: "gstaked"
           command: [ "exposer" ]
           resources:
             limits:
@@ -206,12 +206,12 @@ spec:
               cpu: "0.1"
               memory: "100M"
           volumeMounts:
-            - mountPath: /pstaked
-              name: pstaked
+            - mountPath: /gstaked
+              name: gstaked
       volumes:
-        - name: pstaked
+        - name: gstaked
           emptyDir: { }
         - name: addresses
           configMap:
-            name: test-addresses-pstake
+            name: test-addresses-gstake
 ---

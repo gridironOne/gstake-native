@@ -22,11 +22,11 @@ import (
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	tmdb "github.com/tendermint/tm-db"
 
-	chain "github.com/persistenceOne/pstake-native/v2/app"
-	testhelpers "github.com/persistenceOne/pstake-native/v2/app/helpers"
-	"github.com/persistenceOne/pstake-native/v2/app/params"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/client/cli"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	chain "github.com/gridironOne/gstake-native/v2/app"
+	testhelpers "github.com/gridironOne/gstake-native/v2/app/helpers"
+	"github.com/gridironOne/gstake-native/v2/app/params"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/client/cli"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 type IntegrationTestSuite struct {
@@ -38,7 +38,7 @@ type IntegrationTestSuite struct {
 
 func NewAppConstructor(encodingCfg params.EncodingConfig) network.AppConstructor {
 	return func(val network.Validator) servertypes.Application {
-		return chain.NewpStakeApp(
+		return chain.NewgStakeApp(
 			val.Ctx.Logger, tmdb.NewMemDB(), nil, true, make(map[int64]bool), val.Ctx.Config.RootDir, 0,
 			encodingCfg,
 			simapp.EmptyAppOptions{},

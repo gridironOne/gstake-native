@@ -9,7 +9,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 func TestParams(t *testing.T) {
@@ -26,13 +26,13 @@ min_liquid_staking_amount: "1000000"
 
 	params.WhitelistedValidators = []types.WhitelistedValidator{
 		{
-			ValidatorAddress: "persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+			ValidatorAddress: "gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
 			TargetWeight:     sdk.NewInt(10),
 		},
 	}
 	paramsStr = `liquid_bond_denom: bstake
 whitelisted_validators:
-- validator_address: persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m
+- validator_address: gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m
   target_weight: "10"
 unstake_fee_rate: "0.001000000000000000"
 min_liquid_staking_amount: "1000000"
@@ -90,16 +90,16 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
 						TargetWeight:     sdk.NewInt(10),
 					},
 					{
-						ValidatorAddress: "persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
 						TargetWeight:     sdk.NewInt(10),
 					},
 				}
 			},
-			"liquidstaking validator cannot be duplicated: persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+			"liquidstaking validator cannot be duplicated: gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
 		},
 		{
 			"invalid whitelisted validator address",
@@ -118,7 +118,7 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
 						TargetWeight:     math.Int{},
 					},
 				}
@@ -130,7 +130,7 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
 						TargetWeight:     sdk.NewInt(-1),
 					},
 				}
@@ -142,7 +142,7 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "persistencevaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "gridironvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
 						TargetWeight:     sdk.ZeroInt(),
 					},
 				}

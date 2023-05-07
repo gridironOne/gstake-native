@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 // RandomValidator returns a random validator given access to the keeper and ctx

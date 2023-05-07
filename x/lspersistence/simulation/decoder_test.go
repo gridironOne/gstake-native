@@ -9,8 +9,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/cosmos/cosmos-sdk/types/kv"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/simulation"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 func TestDecodeLiquidStakingStore(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 // HandleMinDepositAndFeeChangeProposal changes host chain params for desired min-deposit and protocol fee

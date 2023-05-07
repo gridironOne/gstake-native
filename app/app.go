@@ -101,15 +101,15 @@ import (
 	ibctesting "github.com/cosmos/ibc-go/v6/testing"
 	ibctestingtypes "github.com/cosmos/ibc-go/v6/testing/types"
 	"github.com/gorilla/mux"
-	"github.com/persistenceOne/persistence-sdk/v2/x/epochs"
-	epochskeeper "github.com/persistenceOne/persistence-sdk/v2/x/epochs/keeper"
-	epochstypes "github.com/persistenceOne/persistence-sdk/v2/x/epochs/types"
-	"github.com/persistenceOne/persistence-sdk/v2/x/ibchooker"
-	ibchookerkeeper "github.com/persistenceOne/persistence-sdk/v2/x/ibchooker/keeper"
-	ibchookertypes "github.com/persistenceOne/persistence-sdk/v2/x/ibchooker/types"
-	"github.com/persistenceOne/persistence-sdk/v2/x/interchainquery"
-	interchainquerykeeper "github.com/persistenceOne/persistence-sdk/v2/x/interchainquery/keeper"
-	interchainquerytypes "github.com/persistenceOne/persistence-sdk/v2/x/interchainquery/types"
+	"github.com/gridironOne/gridiron-sdk/v2/x/epochs"
+	epochskeeper "github.com/gridironOne/gridiron-sdk/v2/x/epochs/keeper"
+	epochstypes "github.com/gridironOne/gridiron-sdk/v2/x/epochs/types"
+	"github.com/gridironOne/gridiron-sdk/v2/x/ibchooker"
+	ibchookerkeeper "github.com/gridironOne/gridiron-sdk/v2/x/ibchooker/keeper"
+	ibchookertypes "github.com/gridironOne/gridiron-sdk/v2/x/ibchooker/types"
+	"github.com/gridironOne/gridiron-sdk/v2/x/interchainquery"
+	interchainquerykeeper "github.com/gridironOne/gridiron-sdk/v2/x/interchainquery/keeper"
+	interchainquerytypes "github.com/gridironOne/gridiron-sdk/v2/x/interchainquery/types"
 	"github.com/rakyll/statik/fs"
 	"github.com/spf13/cast"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -118,18 +118,18 @@ import (
 	tmos "github.com/tendermint/tendermint/libs/os"
 	dbm "github.com/tendermint/tm-db"
 
-	pstakeante "github.com/persistenceOne/pstake-native/v2/ante"
-	pstakeappparams "github.com/persistenceOne/pstake-native/v2/app/params"
-	"github.com/persistenceOne/pstake-native/v2/x/liquidstakeibc"
-	liquidstakeibckeeper "github.com/persistenceOne/pstake-native/v2/x/liquidstakeibc/keeper"
-	liquidstakeibctypes "github.com/persistenceOne/pstake-native/v2/x/liquidstakeibc/types"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos"
-	lscosmosclient "github.com/persistenceOne/pstake-native/v2/x/lscosmos/client"
-	lscosmoskeeper "github.com/persistenceOne/pstake-native/v2/x/lscosmos/keeper"
-	lscosmostypes "github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence"
-	lspersistencekeeper "github.com/persistenceOne/pstake-native/v2/x/lspersistence/keeper"
-	lspersistencetypes "github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	gstakeante "github.com/gridironOne/gstake-native/v2/ante"
+	gstakeappparams "github.com/gridironOne/gstake-native/v2/app/params"
+	"github.com/gridironOne/gstake-native/v2/x/liquidstakeibc"
+	liquidstakeibckeeper "github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/keeper"
+	liquidstakeibctypes "github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/types"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos"
+	lscosmosclient "github.com/gridironOne/gstake-native/v2/x/lscosmos/client"
+	lscosmoskeeper "github.com/gridironOne/gstake-native/v2/x/lscosmos/keeper"
+	lscosmostypes "github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron"
+	lsgridironkeeper "github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
+	lsgridirontypes "github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 var (
@@ -174,7 +174,7 @@ var (
 		lscosmos.AppModuleBasic{},
 		interchainquery.AppModuleBasic{},
 		liquidstakeibc.AppModuleBasic{},
-		lspersistence.AppModuleBasic{},
+		lsgridiron.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -195,7 +195,7 @@ var (
 		lscosmostypes.UndelegationModuleAccount:  nil,
 		lscosmostypes.RewardBoosterModuleAccount: nil, //legacy, blocklist, no permissions
 		liquidstakeibctypes.ModuleName:           nil,
-		lspersistencetypes.ModuleName:            {authtypes.Minter, authtypes.Burner},
+		lsgridirontypes.ModuleName:            {authtypes.Minter, authtypes.Burner},
 	}
 
 	receiveAllowedMAcc = map[string]bool{
@@ -253,7 +253,7 @@ type PstakeApp struct {
 	LSCosmosKeeper        lscosmoskeeper.Keeper
 	InterchainQueryKeeper interchainquerykeeper.Keeper
 	LiquidStakeIBCKeeper  liquidstakeibckeeper.Keeper
-	LSPersistenceKeeper   lspersistencekeeper.Keeper
+	LSGridironKeeper   lsgridironkeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper           capabilitykeeper.ScopedKeeper
@@ -276,18 +276,18 @@ func init() {
 		stdlog.Println("Failed to get home dir %2", err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, ".pstaked")
+	DefaultNodeHome = filepath.Join(userHomeDir, ".gstaked")
 }
 
-// NewpStakeApp returns a reference to an initialized pStake.
-func NewpStakeApp(
+// NewgStakeApp returns a reference to an initialized gStake.
+func NewgStakeApp(
 	logger log.Logger,
 	db dbm.DB, traceStore io.Writer,
 	loadLatest bool,
 	skipUpgradeHeights map[int64]bool,
 	homePath string,
 	invCheckPeriod uint,
-	encodingConfig pstakeappparams.EncodingConfig,
+	encodingConfig gstakeappparams.EncodingConfig,
 	appOpts servertypes.AppOptions,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) *PstakeApp {
@@ -307,7 +307,7 @@ func NewpStakeApp(
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey,
 		capabilitytypes.StoreKey, feegrant.StoreKey, authzkeeper.StoreKey, icahosttypes.StoreKey,
 		icacontrollertypes.StoreKey, epochstypes.StoreKey, lscosmostypes.StoreKey, interchainquerytypes.StoreKey,
-		ibcfeetypes.StoreKey, liquidstakeibctypes.StoreKey, lspersistencetypes.StoreKey,
+		ibcfeetypes.StoreKey, liquidstakeibctypes.StoreKey, lsgridirontypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey, lscosmostypes.MemStoreKey)
@@ -421,8 +421,8 @@ func NewpStakeApp(
 		stakingtypes.NewMultiStakingHooks(app.DistrKeeper.Hooks(), app.SlashingKeeper.Hooks()),
 	)
 
-	app.LSPersistenceKeeper = lspersistencekeeper.NewKeeper(appCodec, keys[lspersistencetypes.StoreKey],
-		app.GetSubspace(lspersistencetypes.ModuleName), app.AccountKeeper, app.BankKeeper,
+	app.LSGridironKeeper = lsgridironkeeper.NewKeeper(appCodec, keys[lsgridirontypes.StoreKey],
+		app.GetSubspace(lsgridirontypes.ModuleName), app.AccountKeeper, app.BankKeeper,
 		app.StakingKeeper, app.DistrKeeper, app.SlashingKeeper)
 
 	app.IBCKeeper = ibckeeper.NewKeeper(
@@ -615,7 +615,7 @@ func NewpStakeApp(
 		lscosmos.NewAppModule(appCodec, liquidStakeIBCModule, app.LSCosmosKeeper, app.AccountKeeper, app.BankKeeper),
 		interchainQueryModule,
 		liquidstakeibc.NewAppModule(app.LiquidStakeIBCKeeper),
-		lspersistence.NewAppModule(appCodec, app.LSPersistenceKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
+		lsgridiron.NewAppModule(appCodec, app.LSGridironKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -650,7 +650,7 @@ func NewpStakeApp(
 		ibchookertypes.ModuleName, //Noop
 		interchainquerytypes.ModuleName,
 		liquidstakeibctypes.ModuleName,
-		lspersistencetypes.ModuleName,
+		lsgridirontypes.ModuleName,
 	)
 	app.mm.SetOrderEndBlockers(
 		crisistypes.ModuleName,
@@ -678,7 +678,7 @@ func NewpStakeApp(
 		ibchookertypes.ModuleName, //Noop
 		interchainquerytypes.ModuleName,
 		liquidstakeibctypes.ModuleName,
-		lspersistencetypes.ModuleName,
+		lsgridirontypes.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -713,7 +713,7 @@ func NewpStakeApp(
 		ibchookertypes.ModuleName, //Noop
 		interchainquerytypes.ModuleName,
 		liquidstakeibctypes.ModuleName,
-		lspersistencetypes.ModuleName,
+		lsgridirontypes.ModuleName,
 	)
 
 	app.mm.RegisterInvariants(&app.CrisisKeeper)
@@ -744,7 +744,7 @@ func NewpStakeApp(
 		// ibcTransferHooksMiddleware, TODO implement simulationModule interface
 		//icaModule,
 		lscosmos.NewAppModule(appCodec, liquidStakeIBCModule, app.LSCosmosKeeper, app.AccountKeeper, app.BankKeeper),
-		lspersistence.NewAppModule(appCodec, app.LSPersistenceKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
+		lsgridiron.NewAppModule(appCodec, app.LSGridironKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
 	)
 
 	app.sm.RegisterStoreDecoders()
@@ -754,8 +754,8 @@ func NewpStakeApp(
 	app.MountTransientStores(tkeys)
 	app.MountMemoryStores(memKeys)
 
-	anteHandler, err := pstakeante.NewAnteHandler(
-		pstakeante.HandlerOptions{
+	anteHandler, err := gstakeante.NewAnteHandler(
+		gstakeante.HandlerOptions{
 			HandlerOptions: ante.HandlerOptions{
 				AccountKeeper:   app.AccountKeeper,
 				BankKeeper:      app.BankKeeper,
@@ -764,7 +764,7 @@ func NewpStakeApp(
 				SigGasConsumer:  ante.DefaultSigVerificationGasConsumer,
 			},
 			IBCkeeper:            app.IBCKeeper,
-			BypassMinFeeMsgTypes: cast.ToStringSlice(appOpts.Get(pstakeappparams.BypassMinFeeMsgTypesKey)),
+			BypassMinFeeMsgTypes: cast.ToStringSlice(appOpts.Get(gstakeappparams.BypassMinFeeMsgTypesKey)),
 		},
 	)
 	if err != nil {
@@ -860,7 +860,7 @@ func (app *PstakeApp) LegacyAmino() *codec.LegacyAmino {
 	return app.legacyAmino
 }
 
-// AppCodec returns pStake's app codec.
+// AppCodec returns gStake's app codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
@@ -868,7 +868,7 @@ func (app *PstakeApp) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
-// InterfaceRegistry returns pStake's InterfaceRegistry
+// InterfaceRegistry returns gStake's InterfaceRegistry
 func (app *PstakeApp) InterfaceRegistry() types.InterfaceRegistry {
 	return app.interfaceRegistry
 }
@@ -978,7 +978,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(lscosmostypes.ModuleName)
 	paramsKeeper.Subspace(interchainquerytypes.ModuleName)
 	paramsKeeper.Subspace(liquidstakeibctypes.ModuleName)
-	paramsKeeper.Subspace(lspersistencetypes.ModuleName)
+	paramsKeeper.Subspace(lsgridirontypes.ModuleName)
 
 	return paramsKeeper
 }

@@ -7,7 +7,7 @@ import (
 
 const (
 	// ModuleName is the name of the liquidstaking module
-	ModuleName = "lspersistence"
+	ModuleName = "lsgridiron"
 
 	// RouterKey is the message router key for the liquidstaking module
 	RouterKey = ModuleName
@@ -25,7 +25,7 @@ var (
 )
 
 // GetLiquidValidatorKey creates the key for the liquid validator with address
-// VALUE: lspersistence/LiquidValidator
+// VALUE: lsgridiron/LiquidValidator
 func GetLiquidValidatorKey(operatorAddr sdk.ValAddress) []byte {
 	return append(LiquidValidatorsKey, address.MustLengthPrefix(operatorAddr)...)
 }

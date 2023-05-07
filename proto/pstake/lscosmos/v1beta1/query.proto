@@ -1,107 +1,107 @@
 syntax = "proto3";
-package pstake.lscosmos.v1beta1;
+package gstake.lscosmos.v1beta1;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
-import "pstake/lscosmos/v1beta1/params.proto";
-import "pstake/lscosmos/v1beta1/governance_proposal.proto";
-import "pstake/lscosmos/v1beta1/lscosmos.proto";
+import "gstake/lscosmos/v1beta1/params.proto";
+import "gstake/lscosmos/v1beta1/governance_proposal.proto";
+import "gstake/lscosmos/v1beta1/lscosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "google/protobuf/timestamp.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "github.com/persistenceOne/pstake-native/v2/x/lscosmos/types";
+option go_package = "github.com/gridironOne/gstake-native/v2/x/lscosmos/types";
 
 // Query defines the gRPC querier service.
 service Query {
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/pstake/lscosmos/v1beta1/params";
+    option (google.api.http).get = "/gstake/lscosmos/v1beta1/params";
   }
 
   rpc HostChainParams(QueryHostChainParamsRequest)
       returns (QueryHostChainParamsResponse) {
-    option (google.api.http).get = "/pstake/lscosmos/v1beta1/host_chain_params";
+    option (google.api.http).get = "/gstake/lscosmos/v1beta1/host_chain_params";
   }
 
   rpc DelegationState(QueryDelegationStateRequest)
       returns (QueryDelegationStateResponse) {
-    option (google.api.http).get = "/pstake/lscosmos/v1beta1/delegation_state";
+    option (google.api.http).get = "/gstake/lscosmos/v1beta1/delegation_state";
   }
 
   rpc AllowListedValidators(QueryAllowListedValidatorsRequest)
       returns (QueryAllowListedValidatorsResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/allow_listed_validators";
+        "/gstake/lscosmos/v1beta1/allow_listed_validators";
   }
 
   rpc CValue(QueryCValueRequest) returns (QueryCValueResponse) {
-    option (google.api.http).get = "/pstake/lscosmos/v1beta1/c_value";
+    option (google.api.http).get = "/gstake/lscosmos/v1beta1/c_value";
   }
 
   rpc ModuleState(QueryModuleStateRequest) returns (QueryModuleStateResponse) {
-    option (google.api.http).get = "/pstake/lscosmos/v1beta1/module_state";
+    option (google.api.http).get = "/gstake/lscosmos/v1beta1/module_state";
   }
 
   rpc IBCTransientStore(QueryIBCTransientStoreRequest)
       returns (QueryIBCTransientStoreResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/ibc_transient_store";
+        "/gstake/lscosmos/v1beta1/ibc_transient_store";
   }
 
   rpc Unclaimed(QueryUnclaimedRequest) returns (QueryUnclaimedResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/unclaimed/{delegator_address}";
+        "/gstake/lscosmos/v1beta1/unclaimed/{delegator_address}";
   }
 
   rpc FailedUnbondings(QueryFailedUnbondingsRequest)
       returns (QueryFailedUnbondingsResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/failed_unbondings/{delegator_address}";
+        "/gstake/lscosmos/v1beta1/failed_unbondings/{delegator_address}";
   }
 
   rpc PendingUnbondings(QueryPendingUnbondingsRequest)
       returns (QueryPendingUnbondingsResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/pending_unbondings/{delegator_address}";
+        "/gstake/lscosmos/v1beta1/pending_unbondings/{delegator_address}";
   }
 
   rpc UnbondingEpochCValue(QueryUnbondingEpochCValueRequest)
       returns (QueryUnbondingEpochCValueResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/unbonding_epoch_c_value/{epoch_number}";
+        "/gstake/lscosmos/v1beta1/unbonding_epoch_c_value/{epoch_number}";
   }
 
   rpc HostAccountUndelegation(QueryHostAccountUndelegationRequest)
       returns (QueryHostAccountUndelegationResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/host_account_undelegation/{epoch_number}";
+        "/gstake/lscosmos/v1beta1/host_account_undelegation/{epoch_number}";
   }
 
   rpc DelegatorUnbondingEpochEntry(QueryDelegatorUnbondingEpochEntryRequest)
       returns (QueryDelegatorUnbondingEpochEntryResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/delegator_unbonding_epoch_entry/"
+        "/gstake/lscosmos/v1beta1/delegator_unbonding_epoch_entry/"
         "{delegator_address}/{epoch_number}";
   }
 
   rpc HostAccounts(QueryHostAccountsRequest)
       returns (QueryHostAccountsResponse) {
-    option (google.api.http).get = "/pstake/lscosmos/v1beta1/host_accounts";
+    option (google.api.http).get = "/gstake/lscosmos/v1beta1/host_accounts";
   }
 
   rpc DepositModuleAccount(QueryDepositModuleAccountRequest)
       returns (QueryDepositModuleAccountResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/deposit_module_account";
+        "/gstake/lscosmos/v1beta1/deposit_module_account";
   }
 
   rpc DelegatorUnbondingEpochEntries(
       QueryAllDelegatorUnbondingEpochEntriesRequest)
       returns (QueryAllDelegatorUnbondingEpochEntriesResponse) {
     option (google.api.http).get =
-        "/pstake/lscosmos/v1beta1/delegator_unbonding_epoch_entries/"
+        "/gstake/lscosmos/v1beta1/delegator_unbonding_epoch_entries/"
         "{delegator_address}";
   }
 }

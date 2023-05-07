@@ -1,16 +1,16 @@
 syntax = "proto3";
-package pstake.liquidstakeibc.v1beta1;
+package gstake.liquidstakeibc.v1beta1;
 
 import "google/api/annotations.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/msg/v1/msg.proto";
 
-option go_package = "github.com/persistenceOne/pstake-native/v2/x/liquidstakeibc/types";
+option go_package = "github.com/gridironOne/gstake-native/v2/x/liquidstakeibc/types";
 
 // Msg defines the liquidstakeibc services.
 service Msg {
   rpc Dummy(MsgDummy) returns (MsgDummyResponse) {
-    option (google.api.http).post = "/pstake/liquidstakeibc/v1beta1/LiquidStake";
+    option (google.api.http).post = "/gstake/liquidstakeibc/v1beta1/LiquidStake";
   }
 }
 

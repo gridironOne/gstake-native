@@ -1,11 +1,11 @@
 syntax = "proto3";
-package pstake.lscosmos.v1beta1;
+package gstake.lscosmos.v1beta1;
 
 import "gogoproto/gogo.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "google/protobuf/timestamp.proto";
 import "cosmos_proto/cosmos.proto";
-option go_package = "github.com/persistenceOne/pstake-native/v2/x/lscosmos/types";
+option go_package = "github.com/gridironOne/gstake-native/v2/x/lscosmos/types";
 
 option (gogoproto.equal_all) = true;
 option (gogoproto.stringer_all) = false;
@@ -39,27 +39,27 @@ message AllowListedValidator {
 }
 
 message PstakeParams {
-  string pstake_deposit_fee = 1 [
+  string gstake_deposit_fee = 1 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ]; // protocol fee in percentage
-  string pstake_restake_fee = 2 [
+  string gstake_restake_fee = 2 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ]; // protocol fee in percentage
-  string pstake_unstake_fee = 3 [
+  string gstake_unstake_fee = 3 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ]; // protocol fee in percentage
-  string pstake_redemption_fee = 4 [
+  string gstake_redemption_fee = 4 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ]; // protocol fee in percentage
-  string pstake_fee_address = 5
+  string gstake_fee_address = 5
       [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
 }
 
@@ -78,7 +78,7 @@ message HostChainParams {
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
     (gogoproto.nullable) = false
   ];
-  PstakeParams pstake_params = 8 [ (gogoproto.nullable) = false ];
+  PstakeParams gstake_params = 8 [ (gogoproto.nullable) = false ];
 }
 
 // DelegationState stores module account balance, ica account balance,

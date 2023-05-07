@@ -8,9 +8,9 @@ generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-  - name: faucet-pstake
+  - name: faucet-gstake
     envs:
-      - configs/.persistence.env
+      - configs/.gridiron.env
   - name: faucet-gaia
     envs:
       - configs/.cosmos.env

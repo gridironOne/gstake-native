@@ -17,18 +17,18 @@ fi
 
 # Build genesis file incl account for passed address
 coins="100000000000000000stake"
-pstaked init --chain-id $CHAINID $CHAINID
-pstaked keys add validator --keyring-backend="test"
-pstaked add-genesis-account $(pstaked keys show validator -a --keyring-backend="test") $coins
-pstaked add-genesis-account $GENACCT $coins
-pstaked gentx validator 5000000000stake --keyring-backend="test" --chain-id $CHAINID
-pstaked collect-gentxs
+gstaked init --chain-id $CHAINID $CHAINID
+gstaked keys add validator --keyring-backend="test"
+gstaked add-genesis-account $(gstaked keys show validator -a --keyring-backend="test") $coins
+gstaked add-genesis-account $GENACCT $coins
+gstaked gentx validator 5000000000stake --keyring-backend="test" --chain-id $CHAINID
+gstaked collect-gentxs
 
 # Set proper defaults and change ports
-sed -i 's#"tcp://127.0.0.1:26657"#"tcp://0.0.0.0:26657"#g' ~/.pstaked/config/config.toml
+sed -i 's#"tcp://127.0.0.1:26657"#"tcp://0.0.0.0:26657"#g' ~/.gstaked/config/config.toml
 sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' ~/.gaia/config/config.toml
 sed -i 's/timeout_propose = "3s"/timeout_propose = "1s"/g' ~/.gaia/config/config.toml
-sed -i 's/index_all_keys = false/index_all_keys = true/g' ~/.pstaked/config/config.toml
+sed -i 's/index_all_keys = false/index_all_keys = true/g' ~/.gstaked/config/config.toml
 
 # Start the gaia
-pstaked start --pruning=nothing
+gstaked start --pruning=nothing

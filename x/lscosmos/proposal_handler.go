@@ -6,8 +6,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/keeper"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/keeper"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 // NewLSCosmosProposalHandler creates a new governance Handler for lscosmos module

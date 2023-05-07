@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package pstake.lspersistence.v1beta1;
+package gstake.lsgridiron.v1beta1;
 
 import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/persistenceOne/pstake-native/v2/x/lspersistence/types";
+option go_package = "github.com/gridironOne/gstake-native/v2/x/lsgridiron/types";
 
 // Params defines the set of params for the liquidstaking module.
 message Params {

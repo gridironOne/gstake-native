@@ -4,7 +4,7 @@ import (
 	errorsmod "cosmossdk.io/errors"
 )
 
-// Sentinel errors for the lspersistence module.
+// Sentinel errors for the lsgridiron module.
 var (
 	ErrActiveLiquidValidatorsNotExists = errorsmod.Register(ModuleName, 2, "active liquid validators not exists")
 	ErrInvalidDenom                    = errorsmod.Register(ModuleName, 3, "invalid denom")

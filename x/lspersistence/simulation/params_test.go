@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/simulation"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
 )
 
 func TestParamChanges(t *testing.T) {
@@ -19,10 +19,10 @@ func TestParamChanges(t *testing.T) {
 		simValue    string
 		subspace    string
 	}{
-		{"lspersistence/WhitelistedValidators", "WhitelistedValidators", "[]", "lspersistence"},
-		{"lspersistence/LiquidBondDenom", "LiquidBondDenom", "\"bstake\"", "lspersistence"},
-		{"lspersistence/UnstakeFeeRate", "UnstakeFeeRate", "\"0.010000000000000000\"", "lspersistence"},
-		{"lspersistence/MinLiquidStakingAmount", "MinLiquidStakingAmount", "\"9727887\"", "lspersistence"},
+		{"lsgridiron/WhitelistedValidators", "WhitelistedValidators", "[]", "lsgridiron"},
+		{"lsgridiron/LiquidBondDenom", "LiquidBondDenom", "\"bstake\"", "lsgridiron"},
+		{"lsgridiron/UnstakeFeeRate", "UnstakeFeeRate", "\"0.010000000000000000\"", "lsgridiron"},
+		{"lsgridiron/MinLiquidStakingAmount", "MinLiquidStakingAmount", "\"9727887\"", "lsgridiron"},
 	}
 
 	paramChanges := simulation.ParamChanges(r)

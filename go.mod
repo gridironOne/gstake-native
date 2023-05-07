@@ -1,4 +1,4 @@
-module github.com/persistenceOne/pstake-native/v2
+module github.com/gridironOne/gstake-native/v2
 
 go 1.19
 
@@ -16,7 +16,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/ory/dockertest/v3 v3.9.1
-	github.com/persistenceOne/persistence-sdk/v2 v2.1.0-rc0
+	github.com/gridironOne/gridiron-sdk/v2 v2.1.0-rc0
 	github.com/rakyll/statik v0.1.7
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/cobra v1.6.1

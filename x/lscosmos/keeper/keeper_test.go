@@ -10,9 +10,9 @@ import (
 	ibctesting "github.com/cosmos/ibc-go/v6/testing"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/persistenceOne/pstake-native/v2/app"
-	"github.com/persistenceOne/pstake-native/v2/app/helpers"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/app"
+	"github.com/gridironOne/gstake-native/v2/app/helpers"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 var (
@@ -39,7 +39,7 @@ var (
 	BaseDenom        = "uatom"
 	MintDenom        = "stk/uatom"
 	MinDeposit       = sdk.NewInt(5)
-	PstakeFeeAddress = "persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
+	PstakeFeeAddress = "gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
 )
 
 func init() {
@@ -70,7 +70,7 @@ func newPstakeAppPath(chainA, chainB *ibctesting.TestChain) *ibctesting.Path {
 func GetPstakeApp(chain *ibctesting.TestChain) *app.PstakeApp {
 	app1, ok := chain.App.(*app.PstakeApp)
 	if !ok {
-		panic("not pstake app")
+		panic("not gstake app")
 	}
 
 	return app1
@@ -81,14 +81,14 @@ func TestKeeperTestSuite(t *testing.T) {
 }
 
 func (suite *IntegrationTestSuite) SetupTest() {
-	_, pstakeApp, ctx := helpers.CreateTestApp(suite.T())
+	_, gstakeApp, ctx := helpers.CreateTestApp(suite.T())
 
-	keeper := pstakeApp.LSCosmosKeeper
+	keeper := gstakeApp.LSCosmosKeeper
 
 	params := types.DefaultParams()
 	keeper.SetParams(ctx, params)
 
-	suite.app = &pstakeApp
+	suite.app = &gstakeApp
 	suite.ctx = ctx
 
 	suite.coordinator = ibctesting.NewCoordinator(suite.T(), 2)
@@ -134,22 +134,22 @@ func (suite *IntegrationTestSuite) SetupTest() {
 }
 
 func (suite *IntegrationTestSuite) TestMintToken() {
-	pstakeApp, ctx := suite.app, suite.ctx
-	testParams := pstakeApp.LSCosmosKeeper.GetHostChainParams(ctx)
+	gstakeApp, ctx := suite.app, suite.ctx
+	testParams := gstakeApp.LSCosmosKeeper.GetHostChainParams(ctx)
 
 	ibcDenom := ibctransfertypes.GetPrefixedDenom(testParams.TransferPort, testParams.TransferChannel, testParams.BaseDenom)
 	balanceOfIbcToken := sdk.NewInt64Coin(ibcDenom, 100)
-	mintAmountDec := sdk.NewDecFromInt(balanceOfIbcToken.Amount).Mul(pstakeApp.LSCosmosKeeper.GetCValue(ctx))
+	mintAmountDec := sdk.NewDecFromInt(balanceOfIbcToken.Amount).Mul(gstakeApp.LSCosmosKeeper.GetCValue(ctx))
 	toBeMintedTokens, _ := sdk.NewDecCoinFromDec(testParams.MintDenom, mintAmountDec).TruncateDecimal()
 
 	addr := sdk.AccAddress("addr________________")
-	acc := pstakeApp.AccountKeeper.NewAccountWithAddress(ctx, addr)
-	pstakeApp.AccountKeeper.SetAccount(ctx, acc)
-	suite.Require().NoError(testutil.FundAccount(pstakeApp.BankKeeper, ctx, addr, sdk.NewCoins(balanceOfIbcToken)))
+	acc := gstakeApp.AccountKeeper.NewAccountWithAddress(ctx, addr)
+	gstakeApp.AccountKeeper.SetAccount(ctx, acc)
+	suite.Require().NoError(testutil.FundAccount(gstakeApp.BankKeeper, ctx, addr, sdk.NewCoins(balanceOfIbcToken)))
 
-	suite.Require().NoError(pstakeApp.LSCosmosKeeper.MintTokens(ctx, toBeMintedTokens, addr))
+	suite.Require().NoError(gstakeApp.LSCosmosKeeper.MintTokens(ctx, toBeMintedTokens, addr))
 
-	currBalance := pstakeApp.BankKeeper.GetBalance(ctx, addr, testParams.MintDenom)
+	currBalance := gstakeApp.BankKeeper.GetBalance(ctx, addr, testParams.MintDenom)
 
 	suite.Require().Equal(toBeMintedTokens, currBalance)
 }

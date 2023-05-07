@@ -1,4 +1,4 @@
-package lspersistence
+package lsgridiron
 
 import (
 	"time"
@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/keeper"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 // BeginBlocker updates liquid validator set changes for the current block

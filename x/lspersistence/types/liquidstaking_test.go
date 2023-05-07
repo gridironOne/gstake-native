@@ -16,10 +16,10 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	chain "github.com/persistenceOne/pstake-native/v2/app"
-	testhelpers "github.com/persistenceOne/pstake-native/v2/app/helpers"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/keeper"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	chain "github.com/gridironOne/gstake-native/v2/app"
+	testhelpers "github.com/gridironOne/gstake-native/v2/app/helpers"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/keeper"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 var (
@@ -271,7 +271,7 @@ func (s *KeeperTestSuite) SetupTest() {
 	stakingParams.MaxValidators = 30
 	s.app.StakingKeeper.SetParams(s.ctx, stakingParams)
 
-	s.keeper = s.app.LSPersistenceKeeper
+	s.keeper = s.app.LSGridironKeeper
 	s.querier = keeper.Querier{Keeper: s.keeper}
 	s.addrs = testhelpers.AddTestAddrs(s.app, s.ctx, 10, sdk.NewInt(1_000_000_000))
 	s.delAddrs = testhelpers.AddTestAddrs(s.app, s.ctx, 10, sdk.NewInt(1_000_000_000))

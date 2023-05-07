@@ -36,13 +36,13 @@ import (
 	tmtypes "github.com/tendermint/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/persistenceOne/pstake-native/v2/app"
-	appparams "github.com/persistenceOne/pstake-native/v2/app/params"
+	"github.com/gridironOne/gstake-native/v2/app"
+	appparams "github.com/gridironOne/gstake-native/v2/app/params"
 )
 
 // SimAppChainID hardcoded chainID for simulation
 const (
-	SimAppChainID = "pstake-app"
+	SimAppChainID = "gstake-app"
 )
 
 var DefaultConsensusParams = &abci.ConsensusParams{
@@ -81,7 +81,7 @@ func (EmptyAppOptions) Get(o string) interface{} { return nil }
 func setup(withGenesis bool, invCheckPeriod uint) (*app.PstakeApp, app.GenesisState) {
 	db := dbm.NewMemDB()
 	encCdc := app.MakeEncodingConfig()
-	testApp := app.NewpStakeApp(
+	testApp := app.NewgStakeApp(
 		log.NewNopLogger(),
 		db,
 		nil,
@@ -102,7 +102,7 @@ func setup(withGenesis bool, invCheckPeriod uint) (*app.PstakeApp, app.GenesisSt
 // SetupTestingApp initializes the IBC-go testing application
 func SetupTestingApp() (ibctesting.TestingApp, map[string]json.RawMessage) {
 	db := dbm.NewMemDB()
-	newpStakeApp := app.NewpStakeApp(
+	newgStakeApp := app.NewgStakeApp(
 		log.NewNopLogger(),
 		db,
 		nil,
@@ -113,7 +113,7 @@ func SetupTestingApp() (ibctesting.TestingApp, map[string]json.RawMessage) {
 		app.MakeEncodingConfig(),
 		EmptyAppOptions{},
 	)
-	return newpStakeApp, app.NewDefaultGenesisState()
+	return newgStakeApp, app.NewDefaultGenesisState()
 }
 
 // Setup initializes a new SimApp. A Nop logger is set in SimApp.
@@ -256,7 +256,7 @@ func NewConfig(dbm *dbm.MemDB) network.Config {
 func NewAppConstructor(encodingCfg appparams.EncodingConfig, db *dbm.MemDB) network.AppConstructor {
 	return func(val network.Validator) types.Application {
 
-		return app.NewpStakeApp(
+		return app.NewgStakeApp(
 			val.Ctx.Logger, db, nil, true, make(map[int64]bool), val.Ctx.Config.RootDir, 0,
 			app.MakeEncodingConfig(),
 			EmptyAppOptions{},

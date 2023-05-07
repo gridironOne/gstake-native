@@ -1,5 +1,5 @@
 /*
- Copyright [2019] - [2021], PERSISTENCE TECHNOLOGIES PTE. LTD. and the persistenceCore contributors
+ Copyright [2019] - [2021], GRIDIRON TECHNOLOGIES PTE. LTD. and the gridironCore contributors
  SPDX-License-Identifier: Apache-2.0
 */
 
@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	Bech32MainPrefix = "persistence"
+	Bech32MainPrefix = "gridiron"
 	CoinType         = 118
 	Purpose          = 44
 

@@ -29,14 +29,14 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	dbm "github.com/tendermint/tm-db"
 
-	pstakeApp "github.com/persistenceOne/pstake-native/v2/app"
-	"github.com/persistenceOne/pstake-native/v2/app/params"
+	gstakeApp "github.com/gridironOne/gstake-native/v2/app"
+	"github.com/gridironOne/gstake-native/v2/app/params"
 )
 
 // NewRootCmd creates a new root command for simd. It is called once in the
 // main function.
 func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
-	encodingConfig := pstakeApp.MakeEncodingConfig()
+	encodingConfig := gstakeApp.MakeEncodingConfig()
 	initClientCtx := client.Context{}.
 		WithCodec(encodingConfig.Marshaler).
 		WithInterfaceRegistry(encodingConfig.InterfaceRegistry).
@@ -44,11 +44,11 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 		WithLegacyAmino(encodingConfig.Amino).
 		WithInput(os.Stdin).
 		WithAccountRetriever(types.AccountRetriever{}).
-		WithHomeDir(pstakeApp.DefaultNodeHome).
+		WithHomeDir(gstakeApp.DefaultNodeHome).
 		WithViper("")
 
 	rootCmd := &cobra.Command{
-		Use:   "pstaked",
+		Use:   "gstaked",
 		Short: "Stargate Cosmos Hub App",
 		PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
 			initClientCtx, err := client.ReadPersistentCommandFlags(initClientCtx, cmd.Flags())
@@ -65,10 +65,10 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 				return err
 			}
 
-			customTemplate, custompStakeConfig := initAppConfig()
+			customTemplate, customgStakeConfig := initAppConfig()
 			customTMConfig := initTendermintConfig()
 
-			return server.InterceptConfigsPreRunHandler(cmd, customTemplate, custompStakeConfig, customTMConfig)
+			return server.InterceptConfigsPreRunHandler(cmd, customTemplate, customgStakeConfig, customTMConfig)
 		},
 	}
 
@@ -109,13 +109,13 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
 	cfg.Seal()
 
 	rootCmd.AddCommand(
-		genutilcli.InitCmd(pstakeApp.ModuleBasics, pstakeApp.DefaultNodeHome),
-		genutilcli.CollectGenTxsCmd(banktypes.GenesisBalancesIterator{}, pstakeApp.DefaultNodeHome),
-		genutilcli.GenTxCmd(pstakeApp.ModuleBasics, encodingConfig.TxConfig, banktypes.GenesisBalancesIterator{}, pstakeApp.DefaultNodeHome),
-		genutilcli.ValidateGenesisCmd(pstakeApp.ModuleBasics),
-		AddGenesisAccountCmd(pstakeApp.DefaultNodeHome),
+		genutilcli.InitCmd(gstakeApp.ModuleBasics, gstakeApp.DefaultNodeHome),
+		genutilcli.CollectGenTxsCmd(banktypes.GenesisBalancesIterator{}, gstakeApp.DefaultNodeHome),
+		genutilcli.GenTxCmd(gstakeApp.ModuleBasics, encodingConfig.TxConfig, banktypes.GenesisBalancesIterator{}, gstakeApp.DefaultNodeHome),
+		genutilcli.ValidateGenesisCmd(gstakeApp.ModuleBasics),
+		AddGenesisAccountCmd(gstakeApp.DefaultNodeHome),
 		tmcli.NewCompletionCmd(rootCmd, true),
-		testnetCmd(pstakeApp.ModuleBasics, banktypes.GenesisBalancesIterator{}),
+		testnetCmd(gstakeApp.ModuleBasics, banktypes.GenesisBalancesIterator{}),
 		debug.Cmd(),
 		config.Cmd(),
 	)
@@ -123,14 +123,14 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
 	ac := appCreator{
 		encCfg: encodingConfig,
 	}
-	server.AddCommands(rootCmd, pstakeApp.DefaultNodeHome, ac.newApp, ac.appExport, addModuleInitFlags)
+	server.AddCommands(rootCmd, gstakeApp.DefaultNodeHome, ac.newApp, ac.appExport, addModuleInitFlags)
 
 	// add keybase, auxiliary RPC, query, and tx child commands
 	rootCmd.AddCommand(
 		rpc.StatusCommand(),
 		queryCommand(),
 		txCommand(),
-		keys.Commands(pstakeApp.DefaultNodeHome),
+		keys.Commands(gstakeApp.DefaultNodeHome),
 	)
 }
 
@@ -156,7 +156,7 @@ func queryCommand() *cobra.Command {
 		authcmd.QueryTxCmd(),
 	)
 
-	pstakeApp.ModuleBasics.AddQueryCommands(cmd)
+	gstakeApp.ModuleBasics.AddQueryCommands(cmd)
 	cmd.PersistentFlags().String(flags.FlagChainID, "", "The network chain ID")
 
 	return cmd
@@ -183,7 +183,7 @@ func txCommand() *cobra.Command {
 		authcmd.GetDecodeCommand(),
 	)
 
-	pstakeApp.ModuleBasics.AddTxCommands(cmd)
+	gstakeApp.ModuleBasics.AddTxCommands(cmd)
 	cmd.PersistentFlags().String(flags.FlagChainID, "", "The network chain ID")
 
 	return cmd
@@ -206,7 +206,7 @@ func (ac appCreator) newApp(
 		skipUpgradeHeights[int64(h)] = true
 	}
 
-	return pstakeApp.NewpStakeApp(
+	return gstakeApp.NewgStakeApp(
 		logger, db, traceStore, true, skipUpgradeHeights,
 		cast.ToString(appOpts.Get(flags.FlagHome)),
 		cast.ToUint(appOpts.Get(server.FlagInvCheckPeriod)),
@@ -225,22 +225,22 @@ func (ac appCreator) appExport(
 	jailAllowedAddrs []string,
 	appOpts servertypes.AppOptions,
 ) (servertypes.ExportedApp, error) {
-	var pStakeApp *pstakeApp.PstakeApp
+	var gStakeApp *gstakeApp.PstakeApp
 	homePath, ok := appOpts.Get(flags.FlagHome).(string)
 	if !ok || homePath == "" {
 		return servertypes.ExportedApp{}, errors.New("application home not set")
 	}
 
 	if height != -1 {
-		pStakeApp = pstakeApp.NewpStakeApp(logger, db, traceStore, false, map[int64]bool{}, homePath, uint(1), ac.encCfg, appOpts)
+		gStakeApp = gstakeApp.NewgStakeApp(logger, db, traceStore, false, map[int64]bool{}, homePath, uint(1), ac.encCfg, appOpts)
 
-		if err := pStakeApp.LoadHeight(height); err != nil {
+		if err := gStakeApp.LoadHeight(height); err != nil {
 			return servertypes.ExportedApp{}, err
 		}
 	} else {
-		pStakeApp = pstakeApp.NewpStakeApp(logger, db, traceStore, true, map[int64]bool{}, homePath, uint(1), ac.encCfg, appOpts)
+		gStakeApp = gstakeApp.NewgStakeApp(logger, db, traceStore, true, map[int64]bool{}, homePath, uint(1), ac.encCfg, appOpts)
 	}
 
-	return pStakeApp.ExportAppStateAndValidators(forZeroHeight, jailAllowedAddrs)
+	return gStakeApp.ExportAppStateAndValidators(forZeroHeight, jailAllowedAddrs)
 
 }

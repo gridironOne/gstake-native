@@ -11,8 +11,8 @@ import (
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	"github.com/stretchr/testify/require"
 
-	"github.com/persistenceOne/pstake-native/v2/app"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/app"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 func init() {
@@ -92,7 +92,7 @@ func TestNewMinDepositAndFeeChangeProposal(t *testing.T) {
 			expectedError: errorsmod.Wrapf(govtypes.ErrInvalidProposalContent, "proposal description is longer than max length of %d", govv1beta1.MaxDescriptionLength),
 		},
 		{
-			testName: "incorrect pstake deposit fee",
+			testName: "incorrect gstake deposit fee",
 			proposal: *types.NewMinDepositAndFeeChangeProposal(
 				"title",
 				"description",
@@ -102,10 +102,10 @@ func TestNewMinDepositAndFeeChangeProposal(t *testing.T) {
 				sdk.ZeroDec(),
 				sdk.ZeroDec(),
 			),
-			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "pstake deposit fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeDepositFee),
+			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "gstake deposit fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeDepositFee),
 		},
 		{
-			testName: "incorrect pstake restake fee",
+			testName: "incorrect gstake restake fee",
 			proposal: *types.NewMinDepositAndFeeChangeProposal(
 				"title",
 				"description",
@@ -115,10 +115,10 @@ func TestNewMinDepositAndFeeChangeProposal(t *testing.T) {
 				sdk.ZeroDec(),
 				sdk.ZeroDec(),
 			),
-			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "pstake restake fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeRestakeFee),
+			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "gstake restake fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeRestakeFee),
 		},
 		{
-			testName: "incorrect pstake unstake fee",
+			testName: "incorrect gstake unstake fee",
 			proposal: *types.NewMinDepositAndFeeChangeProposal(
 				"title",
 				"description",
@@ -128,10 +128,10 @@ func TestNewMinDepositAndFeeChangeProposal(t *testing.T) {
 				sdk.NewDec(10),
 				sdk.ZeroDec(),
 			),
-			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "pstake unstake fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeUnstakeFee),
+			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "gstake unstake fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeUnstakeFee),
 		},
 		{
-			testName: "incorrect pstake unstake fee",
+			testName: "incorrect gstake unstake fee",
 			proposal: *types.NewMinDepositAndFeeChangeProposal(
 				"title",
 				"description",
@@ -141,7 +141,7 @@ func TestNewMinDepositAndFeeChangeProposal(t *testing.T) {
 				sdk.ZeroDec(),
 				sdk.NewDec(10),
 			),
-			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "pstake redemption fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeRedemptionFee),
+			expectedError: errorsmod.Wrapf(types.ErrInvalidFee, "gstake redemption fee must be between %s and %s", sdk.ZeroDec(), types.MaxPstakeRedemptionFee),
 		},
 		{
 			testName: "incorrect deposit",
@@ -184,17 +184,17 @@ func TestNewPstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewPstakeFeeAddressChangeProposal(
 				"title",
 				"description",
-				"persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError:  nil,
-			expectedString: "PstakeFeeAddressChange:\nTitle:                 title\nDescription:           description\nPstakeFeeAddress: \t   persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9\n\n",
+			expectedString: "PstakeFeeAddressChange:\nTitle:                 title\nDescription:           description\nPstakeFeeAddress: \t   gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9\n\n",
 		},
 		{
 			testName: "invalid title length",
 			proposal: *types.NewPstakeFeeAddressChangeProposal(
 				"",
 				"description",
-				"persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrap(govtypes.ErrInvalidProposalContent, "proposal title cannot be blank"),
 		},
@@ -203,7 +203,7 @@ func TestNewPstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewPstakeFeeAddressChangeProposal(
 				strings.Repeat("-", govv1beta1.MaxTitleLength+1),
 				"description",
-				"persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrapf(govtypes.ErrInvalidProposalContent, "proposal title is longer than max length of %d", govv1beta1.MaxTitleLength),
 		},
@@ -212,7 +212,7 @@ func TestNewPstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewPstakeFeeAddressChangeProposal(
 				"title",
 				"",
-				"persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrap(govtypes.ErrInvalidProposalContent, "proposal description cannot be blank"),
 		},
@@ -221,18 +221,18 @@ func TestNewPstakeFeeAddressChangeProposal(t *testing.T) {
 			proposal: *types.NewPstakeFeeAddressChangeProposal(
 				"title",
 				strings.Repeat("-", govv1beta1.MaxDescriptionLength+1),
-				"persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
+				"gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9",
 			),
 			expectedError: errorsmod.Wrapf(govtypes.ErrInvalidProposalContent, "proposal description is longer than max length of %d", govv1beta1.MaxDescriptionLength),
 		},
 		{
-			testName: "invalid pstake fee address length",
+			testName: "invalid gstake fee address length",
 			proposal: *types.NewPstakeFeeAddressChangeProposal(
 				"title",
 				"description",
 				"cosmos1hcqg5wj9t42zawqkqucs7la85ffyv08lum327c",
 			),
-			expectedError: fmt.Errorf("invalid Bech32 prefix; expected persistence, got cosmos"),
+			expectedError: fmt.Errorf("invalid Bech32 prefix; expected gridiron, got cosmos"),
 		},
 	}
 	for _, tc := range testCases {

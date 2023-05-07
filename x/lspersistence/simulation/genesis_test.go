@@ -13,8 +13,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/simulation"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 // TestRandomizedGenState tests the normal scenario of applying RandomizedGenState.

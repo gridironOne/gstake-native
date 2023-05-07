@@ -13,8 +13,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	"github.com/spf13/cobra"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/client/utils"
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/client/utils"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 // GetTxCmd returns the transaction commands for this module
@@ -73,7 +73,7 @@ func NewLiquidStakeCmd() *cobra.Command {
 
 func NewMinDepositAndFeeChangeCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "pstake-lscosmos-min-deposit-and-fee-change",
+		Use:   "gstake-lscosmos-min-deposit-and-fee-change",
 		Args:  cobra.ExactArgs(1),
 		Short: "Submit a minimum deposit and fee change proposal",
 		Long: strings.TrimSpace(
@@ -89,15 +89,15 @@ Example Proposal :
 	"title": "min-deposit and fee change proposal",
 	"description": "this proposal changes min-deposit and protocol fee on chain",
 	"min_deposit": "5",
-	"pstake_deposit_fee": "0.1",
-	"pstake_restake_fee": "0.1",
-	"pstake_unstake_fee": "0.1",
-	"pstake_redemption_fee": "0.1",
+	"gstake_deposit_fee": "0.1",
+	"gstake_restake_fee": "0.1",
+	"gstake_unstake_fee": "0.1",
+	"gstake_redemption_fee": "0.1",
 	"deposit": "100stake"
 }
 
 Example:
-$ %s tx gov submit-proposal pstake-lscosmos-min-deposit-and-fee-change  <path/to/proposal.json> --from <key_or_address> --fees <1000stake> --gas <200000>
+$ %s tx gov submit-proposal gstake-lscosmos-min-deposit-and-fee-change  <path/to/proposal.json> --from <key_or_address> --fees <1000stake> --gas <200000>
 `,
 				version.AppName,
 			),
@@ -163,11 +163,11 @@ $ %s tx gov submit-proposal pstake-lscosmos-min-deposit-and-fee-change  <path/to
 
 func NewPstakeFeeAddressChangeCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "pstake-lscosmos-change-pstake-fee-address [proposal-file]",
+		Use:   "gstake-lscosmos-change-gstake-fee-address [proposal-file]",
 		Args:  cobra.ExactArgs(1),
-		Short: "Submit a pstake fee address change proposal",
+		Short: "Submit a gstake fee address change proposal",
 		Long: strings.TrimSpace(
-			fmt.Sprintf(`Submit a pstake fee address change proposal along with an initial deposit
+			fmt.Sprintf(`Submit a gstake fee address change proposal along with an initial deposit
 The proposal details must be supplied via a JSON file. For values that contains objects,
 only non-empty fields will be updated.
 
@@ -176,14 +176,14 @@ important that any value change is valid.
 
 Example Proposal :
 {
-	"title": "change pstake fee address",
-	"description": "this proposal changes pstake fee address in the chain",
-	"pstake_fee_address" : "persistence1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
+	"title": "change gstake fee address",
+	"description": "this proposal changes gstake fee address in the chain",
+	"gstake_fee_address" : "gridiron1pss7nxeh3f9md2vuxku8q99femnwdjtcpe9ky9"
 	"deposit": "100stake"
 }
 
 Example:
-$ %s tx gov submit-proposal pstake-lscosmos-change-pstake-fee-address <path/to/proposal.json> --from <key_or_address> --fees <1000stake> --gas <200000>
+$ %s tx gov submit-proposal gstake-lscosmos-change-gstake-fee-address <path/to/proposal.json> --from <key_or_address> --fees <1000stake> --gas <200000>
 `,
 				version.AppName,
 			),
@@ -200,7 +200,7 @@ $ %s tx gov submit-proposal pstake-lscosmos-change-pstake-fee-address <path/to/p
 
 			from := clientCtx.GetFromAddress()
 
-			pstakeFeeAddress, err := sdk.AccAddressFromBech32(proposal.PstakeFeeAddress)
+			gstakeFeeAddress, err := sdk.AccAddressFromBech32(proposal.PstakeFeeAddress)
 			if err != nil {
 				return err
 			}
@@ -208,7 +208,7 @@ $ %s tx gov submit-proposal pstake-lscosmos-change-pstake-fee-address <path/to/p
 			content := types.NewPstakeFeeAddressChangeProposal(
 				proposal.Title,
 				proposal.Description,
-				pstakeFeeAddress.String(),
+				gstakeFeeAddress.String(),
 			)
 
 			deposit, err := sdk.ParseCoinsNormalized(proposal.Deposit)
@@ -228,7 +228,7 @@ $ %s tx gov submit-proposal pstake-lscosmos-change-pstake-fee-address <path/to/p
 
 func NewAllowListedValidatorSetChangeProposalCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "pstake-lscosmos-change-allow-listed-validator-set [proposal-file]",
+		Use:   "gstake-lscosmos-change-allow-listed-validator-set [proposal-file]",
 		Args:  cobra.ExactArgs(1),
 		Short: "Submit a AllowListed Validator set change proposal",
 		Long: strings.TrimSpace(
@@ -241,8 +241,8 @@ important that any value change is valid.
 
 Example Proposal :
 {
-	"title": "change pstake fee address",
-	"description": "this proposal changes pstake fee address in the chain",
+	"title": "change gstake fee address",
+	"description": "this proposal changes gstake fee address in the chain",
 	"allow_listed_validators": {
    		 "allow_listed_validators": [
       {
@@ -255,7 +255,7 @@ Example Proposal :
 }
 
 Example:
-$ %s tx gov submit-proposal pstake-lscosmos-change-allow-listed-validator-set <path/to/proposal.json> --from <key_or_address> --fees <1000stake> --gas <200000>
+$ %s tx gov submit-proposal gstake-lscosmos-change-allow-listed-validator-set <path/to/proposal.json> --from <key_or_address> --fees <1000stake> --gas <200000>
 `,
 				version.AppName,
 			),
@@ -411,7 +411,7 @@ func NewJumpStartCmd() *cobra.Command {
 				return err
 			}
 
-			pstakeAddress := clientctx.GetFromAddress()
+			gstakeAddress := clientctx.GetFromAddress()
 
 			msgDetails, err := utils.ParseJumpstartTxnJSON(clientctx.LegacyAmino, args[0])
 			if err != nil {
@@ -438,21 +438,21 @@ func NewJumpStartCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			pstakeParams := types.PstakeParams{
+			gstakeParams := types.PstakeParams{
 				PstakeDepositFee:    depositFee,
 				PstakeRestakeFee:    restakeFee,
 				PstakeUnstakeFee:    unstakeFee,
 				PstakeRedemptionFee: redemptionFee,
-				PstakeFeeAddress:    pstakeAddress.String(),
+				PstakeFeeAddress:    gstakeAddress.String(),
 			}
 
 			if types.ConvertBaseDenomToMintDenom(msgDetails.BaseDenom) != msgDetails.MintDenom {
 				return types.ErrInvalidMintDenom
 			}
 
-			msg := types.NewMsgJumpStart(pstakeAddress, msgDetails.ChainID, msgDetails.ConnectionID, msgDetails.TransferChannel,
+			msg := types.NewMsgJumpStart(gstakeAddress, msgDetails.ChainID, msgDetails.ConnectionID, msgDetails.TransferChannel,
 				msgDetails.TransferPort, msgDetails.BaseDenom, msgDetails.MintDenom, minDeposit, msgDetails.AllowListedValidators,
-				pstakeParams, msgDetails.HostAccounts)
+				gstakeParams, msgDetails.HostAccounts)
 
 			return tx.GenerateOrBroadcastTxCLI(clientctx, cmd.Flags(), msg)
 		},

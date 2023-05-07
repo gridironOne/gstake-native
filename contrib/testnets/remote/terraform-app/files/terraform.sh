@@ -3,6 +3,6 @@
 
 #Usage: terraform.sh <testnet_name> <testnet_node_number>
 
-#Add pstaked node number for remote identification
+#Add gstaked node number for remote identification
 echo "$2" > /etc/nodeid
 

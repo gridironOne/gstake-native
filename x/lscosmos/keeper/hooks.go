@@ -11,11 +11,11 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v6/modules/core/04-channel/types"
 	ibcexported "github.com/cosmos/ibc-go/v6/modules/core/exported"
 	"github.com/gogo/protobuf/proto"
-	"github.com/persistenceOne/persistence-sdk/v2/utils"
-	epochstypes "github.com/persistenceOne/persistence-sdk/v2/x/epochs/types"
-	ibchookertypes "github.com/persistenceOne/persistence-sdk/v2/x/ibchooker/types"
+	"github.com/gridironOne/gridiron-sdk/v2/utils"
+	epochstypes "github.com/gridironOne/gridiron-sdk/v2/x/epochs/types"
+	ibchookertypes "github.com/gridironOne/gridiron-sdk/v2/x/ibchooker/types"
 
-	lscosmostypes "github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	lscosmostypes "github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 // BeforeEpochStart - call hook if registered
@@ -149,9 +149,9 @@ func (k Keeper) DelegationEpochWorkFlow(ctx sdk.Context, hostChainParams lscosmo
 
 		k.AddIBCTransferToTransientStore(ctx, depositBalance)
 	}
-	// move extra tokens to pstake address - anyone can send tokens to delegation address.
+	// move extra tokens to gstake address - anyone can send tokens to delegation address.
 	// deposit address is deny-listed address - can only accept tokens via transactions, so should not have any extra tokens
-	// should be transferred to pstake address.
+	// should be transferred to gstake address.
 	remainingDelegationBalance := k.bankKeeper.GetAllBalances(ctx, authtypes.NewModuleAddress(lscosmostypes.DelegationModuleAccount))
 
 	if remainingDelegationBalance.IsAllPositive() {

@@ -202,26 +202,26 @@ func (hostAccounts *HostAccounts) Validate() error {
 	return nil
 }
 
-func (pstakeParams *PstakeParams) Validate() error {
-	_, err := sdk.AccAddressFromBech32(pstakeParams.PstakeFeeAddress)
+func (gstakeParams *PstakeParams) Validate() error {
+	_, err := sdk.AccAddressFromBech32(gstakeParams.PstakeFeeAddress)
 	if err != nil {
 		return err
 	}
 
-	if pstakeParams.PstakeDepositFee.IsNegative() || pstakeParams.PstakeDepositFee.GTE(MaxPstakeDepositFee) {
-		return errorsmod.Wrapf(ErrInvalidFee, "pstake deposit fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeDepositFee)
+	if gstakeParams.PstakeDepositFee.IsNegative() || gstakeParams.PstakeDepositFee.GTE(MaxPstakeDepositFee) {
+		return errorsmod.Wrapf(ErrInvalidFee, "gstake deposit fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeDepositFee)
 	}
 
-	if pstakeParams.PstakeRestakeFee.IsNegative() || pstakeParams.PstakeRestakeFee.GTE(MaxPstakeRestakeFee) {
-		return errorsmod.Wrapf(ErrInvalidFee, "pstake restake fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeRestakeFee)
+	if gstakeParams.PstakeRestakeFee.IsNegative() || gstakeParams.PstakeRestakeFee.GTE(MaxPstakeRestakeFee) {
+		return errorsmod.Wrapf(ErrInvalidFee, "gstake restake fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeRestakeFee)
 	}
 
-	if pstakeParams.PstakeUnstakeFee.IsNegative() || pstakeParams.PstakeUnstakeFee.GTE(MaxPstakeUnstakeFee) {
-		return errorsmod.Wrapf(ErrInvalidFee, "pstake unstake fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeUnstakeFee)
+	if gstakeParams.PstakeUnstakeFee.IsNegative() || gstakeParams.PstakeUnstakeFee.GTE(MaxPstakeUnstakeFee) {
+		return errorsmod.Wrapf(ErrInvalidFee, "gstake unstake fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeUnstakeFee)
 	}
 
-	if pstakeParams.PstakeRedemptionFee.IsNegative() || pstakeParams.PstakeRedemptionFee.GTE(MaxPstakeRedemptionFee) {
-		return errorsmod.Wrapf(ErrInvalidFee, "pstake redemption fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeRedemptionFee)
+	if gstakeParams.PstakeRedemptionFee.IsNegative() || gstakeParams.PstakeRedemptionFee.GTE(MaxPstakeRedemptionFee) {
+		return errorsmod.Wrapf(ErrInvalidFee, "gstake redemption fee must be between %s and %s", sdk.ZeroDec(), MaxPstakeRedemptionFee)
 	}
 	return nil
 }

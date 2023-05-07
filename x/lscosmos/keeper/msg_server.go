@@ -15,7 +15,7 @@ import (
 	ibcporttypes "github.com/cosmos/ibc-go/v6/modules/core/05-port/types"
 	host "github.com/cosmos/ibc-go/v6/modules/core/24-host"
 
-	"github.com/persistenceOne/pstake-native/v2/x/lscosmos/types"
+	"github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )
 
 type msgServer struct {
@@ -119,7 +119,7 @@ func (m msgServer) LiquidStake(goCtx context.Context, msg *types.MsgLiquidStake)
 		err = m.SendProtocolFee(ctx, sdktypes.NewCoins(protocolCoin), types.ModuleName, hostChainParams.PstakeParams.PstakeFeeAddress)
 		if err != nil {
 			return nil, errorsmod.Wrapf(
-				types.ErrFailedDeposit, "failed to send protocol fee to pstake fee address %s, got error : %s",
+				types.ErrFailedDeposit, "failed to send protocol fee to gstake fee address %s, got error : %s",
 				hostChainParams.PstakeParams.PstakeFeeAddress, err,
 			)
 		}
@@ -165,16 +165,16 @@ func (m msgServer) LiquidUnstake(goCtx context.Context, msg *types.MsgLiquidUnst
 	if err != nil {
 		return nil, err
 	}
-	// take pstake fees
+	// take gstake fees
 	unstakeCoin := msg.Amount
-	pstakeFeeAmt := hostChainParams.PstakeParams.PstakeUnstakeFee.MulInt(msg.Amount.Amount).TruncateInt()
-	pstakeFee := sdktypes.NewCoin(msg.Amount.Denom, pstakeFeeAmt)
-	if pstakeFeeAmt.IsPositive() {
-		err = m.SendProtocolFee(ctx, sdktypes.NewCoins(pstakeFee), types.UndelegationModuleAccount, hostChainParams.PstakeParams.PstakeFeeAddress)
+	gstakeFeeAmt := hostChainParams.PstakeParams.PstakeUnstakeFee.MulInt(msg.Amount.Amount).TruncateInt()
+	gstakeFee := sdktypes.NewCoin(msg.Amount.Denom, gstakeFeeAmt)
+	if gstakeFeeAmt.IsPositive() {
+		err = m.SendProtocolFee(ctx, sdktypes.NewCoins(gstakeFee), types.UndelegationModuleAccount, hostChainParams.PstakeParams.PstakeFeeAddress)
 		if err != nil {
 			return nil, err
 		}
-		unstakeCoin = msg.Amount.Sub(pstakeFee)
+		unstakeCoin = msg.Amount.Sub(gstakeFee)
 	}
 
 	// Add entry to unbonding db
@@ -202,7 +202,7 @@ func (m msgServer) LiquidUnstake(goCtx context.Context, msg *types.MsgLiquidUnst
 			types.EventTypeLiquidUnstake,
 			sdktypes.NewAttribute(types.AttributeDelegatorAddress, msg.GetDelegatorAddress()),
 			sdktypes.NewAttribute(types.AttributeAmountReceived, msg.Amount.String()),
-			sdktypes.NewAttribute(types.AttributePstakeUnstakeFee, pstakeFee.String()),
+			sdktypes.NewAttribute(types.AttributePstakeUnstakeFee, gstakeFee.String()),
 			sdktypes.NewAttribute(types.AttributeUnstakeAmount, unstakeCoin.String()),
 		),
 		sdktypes.NewEvent(
@@ -259,7 +259,7 @@ func (m msgServer) Redeem(goCtx context.Context, msg *types.MsgRedeem) (*types.M
 		err = m.SendProtocolFee(ctx, sdktypes.NewCoins(protocolCoin), types.ModuleName, hostChainParams.PstakeParams.PstakeFeeAddress)
 		if err != nil {
 			return nil, errorsmod.Wrapf(
-				types.ErrFailedDeposit, "failed to send protocol fee to pstake fee address %s, got error : %s",
+				types.ErrFailedDeposit, "failed to send protocol fee to gstake fee address %s, got error : %s",
 				hostChainParams.PstakeParams.PstakeFeeAddress, err,
 			)
 		}
@@ -385,10 +385,10 @@ func (m msgServer) Claim(goCtx context.Context, msg *types.MsgClaim) (*types.Msg
 func (m msgServer) JumpStart(goCtx context.Context, msg *types.MsgJumpStart) (*types.MsgJumpStartResponse, error) {
 	ctx := sdktypes.UnwrapSDKContext(goCtx)
 
-	// check pstake fee address == from addr
+	// check gstake fee address == from addr
 	hostChainParams := m.GetHostChainParams(ctx)
 	if msg.PstakeAddress != hostChainParams.PstakeParams.PstakeFeeAddress {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidAddress, fmt.Sprintf("msg.pstakeAddress should be equal to msg.PstakeParams.PstakeFeeAddress, got %s expected %s", msg.PstakeAddress, hostChainParams.PstakeParams.PstakeFeeAddress))
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidAddress, fmt.Sprintf("msg.gstakeAddress should be equal to msg.PstakeParams.PstakeFeeAddress, got %s expected %s", msg.PstakeAddress, hostChainParams.PstakeParams.PstakeFeeAddress))
 	}
 
 	// check module disabled

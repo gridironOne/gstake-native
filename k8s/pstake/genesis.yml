@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pstake-genesis
+  name: gstake-genesis
   labels:
-    app.kubernetes.io/name: pstake-genesis
+    app.kubernetes.io/name: gstake-genesis
 spec:
   clusterIP: None
   ports:
@@ -29,20 +29,20 @@ spec:
       protocol: TCP
       targetPort: 1317
   selector:
-    app.kubernetes.io/name: pstake-genesis
+    app.kubernetes.io/name: gstake-genesis
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: pstake-genesis
+  name: gstake-genesis
 spec:
-  serviceName: pstake-genesis
+  serviceName: gstake-genesis
   replicas: 1
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app.kubernetes.io/instance: pstake
-      app.kubernetes.io/name: pstake-genesis
+      app.kubernetes.io/instance: gstake
+      app.kubernetes.io/name: gstake-genesis
   template:
     metadata:
       annotations:
@@ -51,16 +51,16 @@ spec:
         sla: high
         tier: gateway
       labels:
-        app.kubernetes.io/instance: pstake
-        app.kubernetes.io/type: pstake-validator
-        app.kubernetes.io/name: pstake-genesis
+        app.kubernetes.io/instance: gstake
+        app.kubernetes.io/type: gstake-validator
+        app.kubernetes.io/name: gstake-genesis
         app.kubernetes.io/version: '0.1'
     spec:
       imagePullSecrets:
         - name: test-docker-creds
       initContainers:
         - name: init-genesis
-          image: persistenceone/pstake
+          image: gridironone/gstake
           imagePullPolicy: Always
           env:
             - name: COINS
@@ -69,9 +69,9 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: chain.id
-                  name: pstake
-            - name: PSTAKE_DIR
-              value: /pstaked
+                  name: gstake
+            - name: gSTAKE_DIR
+              value: /gstaked
           command:
             - bash
             - "-c"
@@ -79,67 +79,67 @@ spec:
               VAL_INDEX=${HOSTNAME##*-}
               echo "Validator Index: $VAL_INDEX"
               
-              pstaked init pstake --chain-id $CHAIN_ID --home $PSTAKE_DIR
-              jq -r ".genesis[0].mnemonic" /configs/validators.json | pstaked keys add $(jq -r ".genesis[0].name" /configs/validators.json) --recover --keyring-backend='test' --home $PSTAKE_DIR
+              gstaked init gstake --chain-id $CHAIN_ID --home $gSTAKE_DIR
+              jq -r ".genesis[0].mnemonic" /configs/validators.json | gstaked keys add $(jq -r ".genesis[0].name" /configs/validators.json) --recover --keyring-backend='test' --home $gSTAKE_DIR
               
               # Provide genesis validator self deligations
-              pstaked add-genesis-account $(jq -r .genesis[$i].address /configs/validators.json) $COINS --keyring-backend='test' --home $PSTAKE_DIR
+              gstaked add-genesis-account $(jq -r .genesis[$i].address /configs/validators.json) $COINS --keyring-backend='test' --home $gSTAKE_DIR
               
               # Give Validator addresses initial coins
               for ((i=0; i<$(jq -r '.validators | length' /configs/validators.json); i++))
               do
-                jq -r ".validators[$i].mnemonic" /configs/validators.json | pstaked keys add $(jq -r ".validators[$i].name" /configs/validators.json) --recover --keyring-backend='test' --home $PSTAKE_DIR
-                pstaked add-genesis-account $(jq -r .validators[$i].address /configs/validators.json) $COINS --keyring-backend='test' --home $PSTAKE_DIR
+                jq -r ".validators[$i].mnemonic" /configs/validators.json | gstaked keys add $(jq -r ".validators[$i].name" /configs/validators.json) --recover --keyring-backend='test' --home $gSTAKE_DIR
+                gstaked add-genesis-account $(jq -r .validators[$i].address /configs/validators.json) $COINS --keyring-backend='test' --home $gSTAKE_DIR
               done
               
-              pstaked gentx $(jq -r ".genesis[0].name" /configs/validators.json) 5000000000uxprt --keyring-backend="test" --chain-id $CHAIN_ID --home $PSTAKE_DIR
+              gstaked gentx $(jq -r ".genesis[0].name" /configs/validators.json) 5000000000uxprt --keyring-backend="test" --chain-id $CHAIN_ID --home $gSTAKE_DIR
               echo "Output of gentx"
-              cat $PSTAKE_DIR/config/gentx/*.json | jq
+              cat $gSTAKE_DIR/config/gentx/*.json | jq
               
               echo "Running collect-gentxs"
-              pstaked collect-gentxs --home $PSTAKE_DIR
+              gstaked collect-gentxs --home $gSTAKE_DIR
               
-              sed -i 's#"tcp://127.0.0.1:26657"#"tcp://0.0.0.0:26657"#g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/timeout_propose = "3s"/timeout_propose = "1s"/g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/index_all_keys = false/index_all_keys = true/g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/unsafe = false/unsafe = true/g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/minimum-gas-prices = ""/minimum-gas-prices = "0.00uxprt"/g' $PSTAKE_DIR/config/config.toml
-              sed -i 's/cors_allowed_origins = []/cors_allowed_origins = ["*"]/g' $PSTAKE_DIR/config/config.toml
+              sed -i 's#"tcp://127.0.0.1:26657"#"tcp://0.0.0.0:26657"#g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/timeout_commit = "5s"/timeout_commit = "1s"/g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/timeout_propose = "3s"/timeout_propose = "1s"/g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/index_all_keys = false/index_all_keys = true/g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/unsafe = false/unsafe = true/g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/minimum-gas-prices = ""/minimum-gas-prices = "0.00uxprt"/g' $gSTAKE_DIR/config/config.toml
+              sed -i 's/cors_allowed_origins = []/cors_allowed_origins = ["*"]/g' $gSTAKE_DIR/config/config.toml
               
-              sed -i 's/enable = false/enable = true/g' $PSTAKE_DIR/config/app.toml
-              sed -i 's/swagger = false/swagger = true/g' $PSTAKE_DIR/config/app.toml
-              sed -i 's/enabled-unsafe-cors = false/enabled-unsafe-cors = true/g' $PSTAKE_DIR/config/app.toml
+              sed -i 's/enable = false/enable = true/g' $gSTAKE_DIR/config/app.toml
+              sed -i 's/swagger = false/swagger = true/g' $gSTAKE_DIR/config/app.toml
+              sed -i 's/enabled-unsafe-cors = false/enabled-unsafe-cors = true/g' $gSTAKE_DIR/config/app.toml
               
-              jq '.consensus_params.block.max_bytes |= "42020096"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq '.app_state.gov.voting_params.voting_period |= "30s"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq '.app_state.gov.tally_params.quorum |= "0.0"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq '.app_state.gov.deposit_params.min_deposit[0].amount |= "10"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
+              jq '.consensus_params.block.max_bytes |= "42020096"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq '.app_state.gov.voting_params.voting_period |= "30s"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq '.app_state.gov.tally_params.quorum |= "0.0"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq '.app_state.gov.deposit_params.min_deposit[0].amount |= "10"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
               
-              jq '.app_state.crisis.constant_fee.denom |= "uxprt"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq '.app_state.gov.deposit_params.min_deposit[0].denom |= "uxprt"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq '.app_state.liquidity.params.pool_creation_fee[0].denom |= "uxprt"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq '.app_state.mint.params.mint_denom |= "uxprt"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq '.app_state.staking.params.bond_denom |= "uxprt"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq -r '.app_state.epochs.epochs[0].duration |= "90s"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
-              jq -r '.app_state.epochs.epochs[2].duration |= "100s"' $PSTAKE_DIR/config/genesis.json | tee $PSTAKE_DIR/config/genesis.new.json
-              mv $PSTAKE_DIR/config/genesis.new.json $PSTAKE_DIR/config/genesis.json
+              jq '.app_state.crisis.constant_fee.denom |= "uxprt"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq '.app_state.gov.deposit_params.min_deposit[0].denom |= "uxprt"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq '.app_state.liquidity.params.pool_creation_fee[0].denom |= "uxprt"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq '.app_state.mint.params.mint_denom |= "uxprt"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq '.app_state.staking.params.bond_denom |= "uxprt"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq -r '.app_state.epochs.epochs[0].duration |= "90s"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
+              jq -r '.app_state.epochs.epochs[2].duration |= "100s"' $gSTAKE_DIR/config/genesis.json | tee $gSTAKE_DIR/config/genesis.new.json
+              mv $gSTAKE_DIR/config/genesis.new.json $gSTAKE_DIR/config/genesis.json
               
               echo "TRYING TO PRINT GENESIS JSON"
-              cat $PSTAKE_DIR/config/genesis.json | jq
+              cat $gSTAKE_DIR/config/genesis.json | jq
               
               
-              pstaked tendermint show-node-id --home $PSTAKE_DIR > /pstaked/genesis-node-id.txt
+              gstaked tendermint show-node-id --home $gSTAKE_DIR > /gstaked/genesis-node-id.txt
           resources:
             limits:
               cpu: "0.2"
@@ -148,27 +148,27 @@ spec:
               cpu: "0.1"
               memory: "100M"
           volumeMounts:
-            - mountPath: /pstaked
-              name: pstaked
+            - mountPath: /gstaked
+              name: gstaked
             - mountPath: /configs
               name: addresses
       containers:
         - name: validator
-          image: persistenceone/pstake
+          image: gridironone/gstake
           imagePullPolicy: Always
           env:
             - name: CHAIN_ID
               valueFrom:
                 configMapKeyRef:
                   key: chain.id
-                  name: pstake
-            - name: PSTAKE_DIR
-              value: /pstaked
+                  name: gstake
+            - name: gSTAKE_DIR
+              value: /gstaked
           command:
             - bash
             - "-c"
             - |
-              pstaked start --home $PSTAKE_DIR
+              gstaked start --home $gSTAKE_DIR
           resources:
             limits:
               cpu: "1"
@@ -177,22 +177,22 @@ spec:
               cpu: "0.5"
               memory: "500M"
           volumeMounts:
-            - mountPath: /pstaked
-              name: pstaked
+            - mountPath: /gstaked
+              name: gstaked
             - mountPath: /configs
               name: addresses
         - name: exposer-app
-          image: persistenceone/exposer:pstake
+          image: gridironone/exposer:gstake
           imagePullPolicy: Always
           env:
             - name: HOME_DIR
-              value: /pstaked
+              value: /gstaked
             - name: GENESIS_FILE
-              value: /pstaked/config/genesis.json
+              value: /gstaked/config/genesis.json
             - name: PORT
               value: "8081"
             - name: CLIENT_NAME
-              value: "pstaked"
+              value: "gstaked"
           command: [ "exposer" ]
           resources:
             limits:
@@ -202,12 +202,12 @@ spec:
               cpu: "0.1"
               memory: "100M"
           volumeMounts:
-            - mountPath: /pstaked
-              name: pstaked
+            - mountPath: /gstaked
+              name: gstaked
       volumes:
-        - name: pstaked
+        - name: gstaked
           emptyDir: { }
         - name: addresses
           configMap:
-            name: test-addresses-pstake
+            name: test-addresses-gstake
 ---

@@ -241,7 +241,7 @@ func (m *MsgRecreateICA) GetSigners() []sdk.AccAddress {
 //
 //nolint:interfacer
 func NewMsgJumpStart(address sdk.AccAddress, chainID, connectionID, transferChannel, transferPort, baseDenom, mintDenom string,
-	minDeposit math.Int, allowListedValidators AllowListedValidators, pstakeParams PstakeParams, hostAccounts HostAccounts) *MsgJumpStart {
+	minDeposit math.Int, allowListedValidators AllowListedValidators, gstakeParams PstakeParams, hostAccounts HostAccounts) *MsgJumpStart {
 	return &MsgJumpStart{
 		PstakeAddress:         address.String(),
 		ChainID:               chainID,
@@ -252,7 +252,7 @@ func NewMsgJumpStart(address sdk.AccAddress, chainID, connectionID, transferChan
 		MintDenom:             mintDenom,
 		MinDeposit:            minDeposit,
 		AllowListedValidators: allowListedValidators,
-		PstakeParams:          pstakeParams,
+		PstakeParams:          gstakeParams,
 		HostAccounts:          hostAccounts,
 	}
 }
@@ -284,7 +284,7 @@ func (m *MsgJumpStart) ValidateBasic() error {
 		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, m.PstakeParams.PstakeFeeAddress)
 	}
 	if m.PstakeParams.PstakeFeeAddress != m.PstakeAddress {
-		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, fmt.Sprintf("pstakeAddress should be equal to PstakeParams.PstakeFeeAddress, got %s, %s", m.PstakeParams.PstakeFeeAddress, m.PstakeAddress))
+		return errorsmod.Wrap(sdkErrors.ErrInvalidAddress, fmt.Sprintf("gstakeAddress should be equal to PstakeParams.PstakeFeeAddress, got %s, %s", m.PstakeParams.PstakeFeeAddress, m.PstakeAddress))
 	}
 	if m.MinDeposit.LTE(sdk.ZeroInt()) {
 		return errorsmod.Wrapf(ErrInvalidDeposit, "min deposit must be positive")

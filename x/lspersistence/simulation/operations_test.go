@@ -3,7 +3,7 @@ package simulation_test
 import (
 	"github.com/cosmos/cosmos-sdk/x/bank/testutil"
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
-	testhelpers "github.com/persistenceOne/pstake-native/v2/app/helpers"
+	testhelpers "github.com/gridironOne/gstake-native/v2/app/helpers"
 	"math/rand"
 	"testing"
 	"time"
@@ -16,10 +16,10 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	chain "github.com/persistenceOne/pstake-native/v2/app"
-	"github.com/persistenceOne/pstake-native/v2/app/params"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/simulation"
-	"github.com/persistenceOne/pstake-native/v2/x/lspersistence/types"
+	chain "github.com/gridironOne/gstake-native/v2/app"
+	"github.com/gridironOne/gstake-native/v2/app/params"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/simulation"
+	"github.com/gridironOne/gstake-native/v2/x/lsgridiron/types"
 )
 
 // TestWeightedOperations tests the weights of the operations.
@@ -31,7 +31,7 @@ func TestWeightedOperations(t *testing.T) {
 	cdc := types.ModuleCdc
 	appParams := make(simtypes.AppParams)
 
-	weightedOps := simulation.WeightedOperations(appParams, cdc, app.AccountKeeper, app.BankKeeper, app.LSPersistenceKeeper)
+	weightedOps := simulation.WeightedOperations(appParams, cdc, app.AccountKeeper, app.BankKeeper, app.LSGridironKeeper)
 
 	s := rand.NewSource(2)
 	r := rand.New(s)
@@ -41,7 +41,7 @@ func TestWeightedOperations(t *testing.T) {
 	val0 := getTestingValidator0(t, app, ctx, accs)
 	val1 := getTestingValidator1(t, app, ctx, accs)
 
-	param := app.LSPersistenceKeeper.GetParams(ctx)
+	param := app.LSGridironKeeper.GetParams(ctx)
 	param.WhitelistedValidators = []types.WhitelistedValidator{
 		{
 			ValidatorAddress: val0.OperatorAddress,
@@ -52,7 +52,7 @@ func TestWeightedOperations(t *testing.T) {
 			TargetWeight:     sdk.OneInt(),
 		},
 	}
-	app.LSPersistenceKeeper.SetParams(ctx, param)
+	app.LSGridironKeeper.SetParams(ctx, param)
 
 	// begin a new block
 	blockTime := time.Now().UTC()
@@ -84,7 +84,7 @@ func createTestApp(t *testing.T, isCheckTx bool) (*chain.PstakeApp, sdk.Context)
 
 	ctx := app.BaseApp.NewContext(isCheckTx, tmproto.Header{})
 	app.MintKeeper.SetParams(ctx, minttypes.DefaultParams())
-	app.LSPersistenceKeeper.SetParams(ctx, types.DefaultParams())
+	app.LSGridironKeeper.SetParams(ctx, types.DefaultParams())
 
 	return app, ctx
 }
