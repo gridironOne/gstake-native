@@ -195,7 +195,7 @@ var (
 		lscosmostypes.UndelegationModuleAccount:  nil,
 		lscosmostypes.RewardBoosterModuleAccount: nil, //legacy, blocklist, no permissions
 		liquidstakeibctypes.ModuleName:           nil,
-		lsgridirontypes.ModuleName:            {authtypes.Minter, authtypes.Burner},
+		lsgridirontypes.ModuleName:               {authtypes.Minter, authtypes.Burner},
 	}
 
 	receiveAllowedMAcc = map[string]bool{
@@ -253,7 +253,7 @@ type GstakeApp struct {
 	LSCosmosKeeper        lscosmoskeeper.Keeper
 	InterchainQueryKeeper interchainquerykeeper.Keeper
 	LiquidStakeIBCKeeper  liquidstakeibckeeper.Keeper
-	LSGridironKeeper   lsgridironkeeper.Keeper
+	LSGridironKeeper      lsgridironkeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper           capabilitykeeper.ScopedKeeper

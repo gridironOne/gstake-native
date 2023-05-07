@@ -26,13 +26,13 @@ min_liquid_staking_amount: "1000000"
 
 	params.WhitelistedValidators = []types.WhitelistedValidator{
 		{
-			ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+			ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv",
 			TargetWeight:     sdk.NewInt(10),
 		},
 	}
 	paramsStr = `liquid_bond_denom: bstake
 whitelisted_validators:
-- validator_address: did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m
+- validator_address: did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv
   target_weight: "10"
 unstake_fee_rate: "0.001000000000000000"
 min_liquid_staking_amount: "1000000"
@@ -90,16 +90,16 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv",
 						TargetWeight:     sdk.NewInt(10),
 					},
 					{
-						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv",
 						TargetWeight:     sdk.NewInt(10),
 					},
 				}
 			},
-			"liquidstaking validator cannot be duplicated: did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+			"liquidstaking validator cannot be duplicated: did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv",
 		},
 		{
 			"invalid whitelisted validator address",
@@ -118,7 +118,7 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv",
 						TargetWeight:     math.Int{},
 					},
 				}
@@ -130,7 +130,7 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv",
 						TargetWeight:     sdk.NewInt(-1),
 					},
 				}
@@ -142,7 +142,7 @@ func TestValidateWhitelistedValidators(t *testing.T) {
 			func(params *types.Params) {
 				params.WhitelistedValidators = []types.WhitelistedValidator{
 					{
-						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunqm9z90m",
+						ValidatorAddress: "did:fury:gvaloper19rz0gtqf88vwk6dwz522ajpqpv5swunq5m78dv",
 						TargetWeight:     sdk.ZeroInt(),
 					},
 				}

@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	"github.com/persistenceOne/persistence-sdk/v2/x/oracle/testutil"
 	"github.com/gridironOne/gstake-native/app/helpers"
+	"github.com/persistenceOne/persistence-sdk/v2/x/oracle/testutil"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
