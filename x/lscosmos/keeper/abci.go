@@ -7,7 +7,7 @@ import (
 	clienttypes "github.com/cosmos/ibc-go/v6/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v6/modules/core/04-channel/types"
 	"github.com/gogo/protobuf/proto"
-	"github.com/gridironOne/gridiron-sdk/v2/utils"
+	"github.com/persistenceOne/persistence-sdk/v2/utils"
 
 	lscosmostypes "github.com/gridironOne/gstake-native/v2/x/lscosmos/types"
 )

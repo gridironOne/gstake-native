@@ -1,7 +1,7 @@
 package keeper_test
 
 import (
-	"github.com/gridironOne/gridiron-sdk/v2/x/oracle/testutil"
+	"github.com/persistenceOne/persistence-sdk/v2/x/oracle/testutil"
 	"github.com/gridironOne/gstake-native/v2/app/helpers"
 	"time"
 
