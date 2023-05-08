@@ -60,7 +60,7 @@ spec:
         - name: test-docker-creds
       initContainers:
         - name: init-genesis
-          image: gridironone/gstake
+          image: gridchain/gstake
           imagePullPolicy: Always
           env:
             - name: COINS
@@ -154,7 +154,7 @@ spec:
               name: addresses
       containers:
         - name: validator
-          image: gridironone/gstake
+          image: gridchain/gstake
           imagePullPolicy: Always
           env:
             - name: CHAIN_ID

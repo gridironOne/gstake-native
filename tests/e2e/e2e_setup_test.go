@@ -275,7 +275,7 @@ func (s *IntegrationTestSuite) runValidators(c *chain, portOffset int) {
 			Mounts: []string{
 				fmt.Sprintf("%s/:/root/.gstaked", val.configDir()),
 			},
-			Repository: "gridironone/gstake-e2e",
+			Repository: "gridchain/gstake-e2e",
 		}
 
 		// expose the first validator for debugging and communication

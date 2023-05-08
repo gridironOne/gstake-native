@@ -1,5 +1,5 @@
 PROCESS=gstake
-IMAGE_NAME=gridironone/$(PROCESS)
+IMAGE_NAME=gridchain/$(PROCESS)
 TAG_NAME=latest
 CONTAINER_NAME=container-$(PROCESS)
 FILE=Dockerfile

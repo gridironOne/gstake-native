@@ -13,8 +13,10 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/gstake/lsgridiron/v1beta1/params";
   }
-  // LiquidValidators returns liquid validators with states of the liquidstaking module.
-  rpc LiquidValidators(QueryLiquidValidatorsRequest) returns (QueryLiquidValidatorsResponse) {
+  // LiquidValidators returns liquid validators with states of the liquidstaking
+  // module.
+  rpc LiquidValidators(QueryLiquidValidatorsRequest)
+      returns (QueryLiquidValidatorsResponse) {
     option (google.api.http).get = "/gstake/lsgridiron/v1beta1/validators";
   }
 
@@ -29,15 +31,18 @@ message QueryParamsRequest {}
 
 // QueryParamsResponse is the response type for the Query/Params RPC method.
 message QueryParamsResponse {
-  Params params = 1 [(gogoproto.nullable) = false];
+  Params params = 1 [ (gogoproto.nullable) = false ];
 }
 
-// QueryLiquidValidatorsRequest is the request type for the Query/LiquidValidators RPC method.
+// QueryLiquidValidatorsRequest is the request type for the
+// Query/LiquidValidators RPC method.
 message QueryLiquidValidatorsRequest {}
 
-// QueryLiquidValidatorsResponse is the response type for the Query/LiquidValidators RPC method.
+// QueryLiquidValidatorsResponse is the response type for the
+// Query/LiquidValidators RPC method.
 message QueryLiquidValidatorsResponse {
-  repeated LiquidValidatorState liquid_validators = 1 [(gogoproto.nullable) = false];
+  repeated LiquidValidatorState liquid_validators = 1
+      [ (gogoproto.nullable) = false ];
 }
 
 // QueryStatesRequest is the request type for the Query/States RPC method.
@@ -45,5 +50,5 @@ message QueryStatesRequest {}
 
 // QueryStatesResponse is the response type for the Query/States RPC method.
 message QueryStatesResponse {
-  NetAmountState net_amount_state = 1 [(gogoproto.nullable) = false];
+  NetAmountState net_amount_state = 1 [ (gogoproto.nullable) = false ];
 }

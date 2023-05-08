@@ -1,4 +1,4 @@
-ARG BASE_DOCKER_IMAGE=gridironone/gstake:latest
+ARG BASE_DOCKER_IMAGE=gridchain/gstake:latest
 FROM golang:1.19-alpine AS build-env
 
 # Set up dependencies
