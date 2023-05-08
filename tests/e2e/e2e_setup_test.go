@@ -76,8 +76,8 @@ func (s *IntegrationTestSuite) SetupSuite() {
 
 	// The boostrapping phase is as follows:
 	//
-	// 1. Initialize PStake validator nodes.
-	// 2. Create and initialize PStake validator genesis files (both chains)
+	// 1. Initialize GStake validator nodes.
+	// 2. Create and initialize GStake validator genesis files (both chains)
 	// 3. Start both networks.
 	// 4. Create and run IBC relayer (Hermes) containers.
 
@@ -265,7 +265,7 @@ func (s *IntegrationTestSuite) initValidatorConfigs(c *chain) {
 }
 
 func (s *IntegrationTestSuite) runValidators(c *chain, portOffset int) {
-	s.T().Logf("starting PStake %s validator containers...", c.id)
+	s.T().Logf("starting GStake %s validator containers...", c.id)
 
 	s.valResources[c.id] = make([]*dockertest.Resource, len(c.validators))
 	for i, val := range c.validators {
@@ -298,7 +298,7 @@ func (s *IntegrationTestSuite) runValidators(c *chain, portOffset int) {
 		s.Require().NoError(err)
 
 		s.valResources[c.id][i] = resource
-		s.T().Logf("started PStake %s validator container: %s", c.id, resource.Container.ID)
+		s.T().Logf("started GStake %s validator container: %s", c.id, resource.Container.ID)
 	}
 
 	rpcClient, err := rpchttp.New("tcp://localhost:26657", "/websocket")
@@ -323,7 +323,7 @@ func (s *IntegrationTestSuite) runValidators(c *chain, portOffset int) {
 		},
 		5*time.Minute,
 		time.Second,
-		"PStake node failed to produce blocks",
+		"GStake node failed to produce blocks",
 	)
 }
 
@@ -411,7 +411,7 @@ func (s *IntegrationTestSuite) runIBCRelayer() {
 	// transport errors.
 	time.Sleep(10 * time.Second)
 
-	// create the client, connection and channel between the two PStake chains
+	// create the client, connection and channel between the two GStake chains
 	s.connectIBCChains()
 }
 
